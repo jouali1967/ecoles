@@ -148,12 +148,13 @@
               <!--end::Menu Body-->
               <!--begin::Menu Footer-->
               <li class="user-footer">
-                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST">
                   @csrf
                   <button type="submit" class="btn btn-default btn-flat float-end">
                     <i class="fas fa-sign-out-alt me-2"></i>{{ __('Déconnexion') }}
                   </button>
-                </form>
+                </form> --}}
+                <livewire:auth.logout-button />
 
                 {{-- <a href="#" class="btn btn-default btn-flat float-end">Sign out</a> --}}
               </li>
