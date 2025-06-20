@@ -208,6 +208,8 @@
   $(document).ready(function(){
     flatpickr("#datepicker", {
       dateFormat: "d/m/Y",
+      locale: 'fr',
+      allowInput: true,
       onChange: function(selectedDates, dateStr) {
         $wire.set('date_nais', dateStr);
       }

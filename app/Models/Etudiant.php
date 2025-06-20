@@ -20,7 +20,7 @@ class Etudiant extends Model
         'date_nais',
         'adresse',
         'phone',
-        'email'
+        'email','nom_ar','prenom_ar','lieu_naiss_ar','cin_ar','num_acte_nais'
     ];
 
     protected $casts = [

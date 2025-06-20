@@ -26,15 +26,11 @@ class CreateEtudiant extends Component
   public $classe_id;
   #[Rule('required')]
   public $annee_scol;
+
   #[Rule('required|min:2|regex:/^[\x{0600}-\x{06FF} ]+$/u')]
   public $nom_ar;
   #[Rule('required|min:2|regex:/^[\x{0600}-\x{06FF} ]+$/u')]
   public $prenom_ar;
-    #[Rule('required', 'date_format:d/m/Y')]
-  public $date_insc;
-    #[Rule('nullable', 'date_format:d/m/Y')]
-  public $date_sortie;
-
 
   public function render()
   {
@@ -44,19 +40,18 @@ class CreateEtudiant extends Component
 
   public function save()
   {
-    $dataEtudiant=$this->validate();
-    //dd($dataEtudiant);
+    $this->validate();
 
     // Créer un nouvel étudiant
     $etudiant = Etudiant::create([
       'nom' => $this->nom,
       'prenom' => $this->prenom,
+      'nom_ar' => $this->nom_ar,
+      'prenom_ar' => $this->prenom_ar,
       'date_nais' => $this->date_nais,
       'adresse' => $this->adresse,
       'phone' => $this->phone,
-      'email' => $this->email,
-      'nom_ar' => $this->nom_ar,
-      'prenom_ar' => $this->prenom_ar
+      'email' => $this->email
     ]);
 
     // Créer l'inscription

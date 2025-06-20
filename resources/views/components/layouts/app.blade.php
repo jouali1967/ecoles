@@ -15,18 +15,21 @@
     content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard" />
   <!--end::Primary Meta Tags-->
   <!--begin::Fonts-->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    integrity="sha256-9kPW/n5nn53j4WMRYAxe9c1rCY96Oogo/MKSVdKzPmI=" crossorigin="anonymous" />
+  {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    integrity="sha256-9kPW/n5nn53j4WMRYAxe9c1rCY96Oogo/MKSVdKzPmI=" crossorigin="anonymous" /> --}}
   <!--end::Third Party Plugin(Bootstrap Icons)-->
   <!--begin::Required Plugin(AdminLTE)-->
-  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap-icons/bootstrap-icons.min.css') }}" />
+  {{-- <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script> --}}
   <link rel="stylesheet" href="{{ asset('dist/datepicker/flatpickr.min.css') }}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/style.css">
+  {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/style.css"> --}}
+  <link rel="stylesheet" href="{{ asset('dist/datepicker/monthSelectStyle.css') }}">
+  <link href="{{ asset('dist/css/select2.min.css') }}" rel="stylesheet" />
 
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}" />
   <!--end::Required Plugin(AdminLTE)-->
   @livewireStyles
-  </head>
+</head>
 <!--end::Head-->
 <!--begin::Body-->
 
@@ -48,120 +51,22 @@
         <!--end::Start Navbar Links-->
         <!--begin::End Navbar Links-->
         <ul class="navbar-nav ms-auto">
-          <!--begin::Navbar Search-->
-          <!--end::Navbar Search-->
-          <!--begin::Messages Dropdown Menu-->
-          <li class="nav-item dropdown">
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-              <a href="#" class="dropdown-item">
-                <!--begin::Message-->
-                <div class="d-flex">
-                  <div class="flex-shrink-0">
-                    <img src="{{ asset('dist/assets/img/user1-128x128.jpg') }}" alt="User Avatar"
-                      class="img-size-50 rounded-circle me-3" />
-                  </div>
-                  <div class="flex-grow-1">
-                    <h3 class="dropdown-item-title">
-                      Brad Diesel
-                      <span class="float-end fs-7 text-danger"><i class="bi bi-star-fill"></i></span>
-                    </h3>
-                    <p class="fs-7">Call me whenever you can...</p>
-                    <p class="fs-7 text-secondary">
-                      <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                    </p>
-                  </div>
-                </div>
-                <!--end::Message-->
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-                <!--begin::Message-->
-                <div class="d-flex">
-                  <div class="flex-shrink-0">
-                    <img src="{{ asset('dist/assets/img/user1-128x128.jpg') }}" alt="User Avatar"
-                      class="img-size-50 rounded-circle me-3" />
-                  </div>
-                  <div class="flex-grow-1">
-                    <h3 class="dropdown-item-title">
-                      John Pierce
-                      <span class="float-end fs-7 text-secondary">
-                        <i class="bi bi-star-fill"></i>
-                      </span>
-                    </h3>
-                    <p class="fs-7">I got your message bro</p>
-                    <p class="fs-7 text-secondary">
-                      <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                    </p>
-                  </div>
-                </div>
-                <!--end::Message-->
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-                <!--begin::Message-->
-                <div class="d-flex">
-                  <div class="flex-shrink-0">
-                    <img src="{{ asset('dist/assets/img/user3-128x128.jpg') }}" alt="User Avatar"
-                      class="img-size-50 rounded-circle me-3" />
-                  </div>
-                  <div class="flex-grow-1">
-                    <h3 class="dropdown-item-title">
-                      Nora Silvester
-                      <span class="float-end fs-7 text-warning">
-                        <i class="bi bi-star-fill"></i>
-                      </span>
-                    </h3>
-                    <p class="fs-7">The subject goes here</p>
-                    <p class="fs-7 text-secondary">
-                      <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                    </p>
-                  </div>
-                </div>
-                <!--end::Message-->
-              </a>
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+          <!--begin::User Menu Simple-->
+          <li class="nav-item d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center">
+              <img src="{{ asset('dist/assets/img/user2-160x160.jpg') }}" class="rounded-circle shadow me-2"
+                style="width: 32px; height: 32px;" alt="User Image" />
+              <span class="d-none d-md-inline text-dark">{{ Auth::user()->name }}</span>
             </div>
+            <form action="{{ route('logout') }}" method="POST" class="m-0">
+              @csrf
+              <button type="submit" class="btn btn-outline-secondary btn-sm">
+                <i class="fas fa-sign-out-alt me-2"></i>
+                <span class="d-none d-md-inline">Déconnexion</span>
+              </button>
+            </form>
           </li>
-          <!--end::Messages Dropdown Menu-->
-          <!--begin::Notifications Dropdown Menu-->
-          <!--end::Notifications Dropdown Menu-->
-          <!--begin::Fullscreen Toggle-->
-          <!--end::Fullscreen Toggle-->
-          <!--begin::User Menu Dropdown-->
-          <li class="nav-item dropdown user-menu">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-              <img src="{{ asset('dist/assets/img/user2-160x160.jpg') }}" class="user-image rounded-circle shadow" alt="User Image" />
-              <span class="d-none d-md-inline">Alexander Pierce</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-              <!--begin::User Image-->
-              <li class="user-header text-bg-primary">
-                <img src="{{ asset('dist/assets/img/user2-160x160.jpg') }}" class="rounded-circle shadow" alt="User Image" />
-                <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2023</small>
-                </p>
-              </li>
-              <!--end::User Image-->
-              <!--begin::Menu Body-->
-              <!--end::Menu Body-->
-              <!--begin::Menu Footer-->
-              <li class="user-footer">
-                {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                  @csrf
-                  <button type="submit" class="btn btn-default btn-flat float-end">
-                    <i class="fas fa-sign-out-alt me-2"></i>{{ __('Déconnexion') }}
-                  </button>
-                </form> --}}
-                <livewire:auth.logout-button />
-
-                {{-- <a href="#" class="btn btn-default btn-flat float-end">Sign out</a> --}}
-              </li>
-              <!--end::Menu Footer-->
-            </ul>
-          </li>
-          <!--end::User Menu Dropdown-->
+          <!--end::User Menu Simple-->
         </ul>
         <!--end::End Navbar Links-->
       </div>
@@ -175,10 +80,11 @@
         <!--begin::Brand Link-->
         <a href="#" class="brand-link">
           <!--begin::Brand Image-->
-          <img src="{{ asset('dist/assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image opacity-75 shadow" />
+          <img src="{{ asset('dist/assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+            class="brand-image opacity-75 shadow" />
           <!--end::Brand Image-->
           <!--begin::Brand Text-->
-          <span class="brand-text fw-light">jouali</span> 
+          <span class="brand-text fw-light">Etudiants</span>
           <!--end::Brand Text-->
         </a>
         <!--end::Brand Link-->
@@ -193,120 +99,130 @@
               <a href="#" class="nav-link {{ request()->routeIs('classes.*') ? 'active' : '' }}">
                 <i class="nav-icon bi bi-speedometer"></i>
                 <p>
-                   Classes
+                  Classes
                   <i class="nav-arrow bi bi-chevron-right"></i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a wire:navigate href="{{ route('classes.maj') }}" class="nav-link {{ request()->routeIs('classes.maj') ? 'active' : '' }}">
+                  <a wire:navigate href="{{ route('classes.maj') }}"
+                    class="nav-link {{ request()->routeIs('classes.maj') ? 'active' : '' }}">
                     <i class="nav-icon bi bi-circle"></i>
                     <p>Ajouter Classe</p>
                   </a>
                 </li>
-                </li>
-              </ul>
             </li>
-            <li class="nav-item {{ request()->routeIs('matieres.*') ? 'menu-open' : '' }}">
-              <a href="#" class="nav-link {{ request()->routeIs('matieres.*') ? 'active' : '' }}">
-                <i class="nav-icon bi bi-box-seam-fill"></i>
-                <p>
-                  Matieres
-                  <i class="nav-arrow bi bi-chevron-right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a wire:navigate href="{{ route('matieres.maj') }}" class="nav-link {{ request()->routeIs('matieres.maj') ? 'active' : '' }}">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Liste Matiere</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a wire:navigate href="{{ route('classes-matieres.create') }}" class="nav-link {{ request()->routeIs('classes-matieres.create') ? 'active' : '' }}">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Classes_Matiers</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item {{ request()->routeIs('etudiants.*') ? 'menu-open' : '' }}">
-              <a href="#" class="nav-link {{ request()->routeIs('etudiants.*') ? 'active' : '' }}">
-                <i class="nav-icon bi bi-box-seam-fill"></i>
-                <p>
-                  Etudiants
-                  <i class="nav-arrow bi bi-chevron-right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a wire:navigate href="{{route('etudiants.create') }}" class="nav-link {{ request()->routeIs('etudiants.create') ? 'active' : '' }}">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Ajouter Etudiant</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a wire:navigate href="{{ route('etudiants.index') }}" class="nav-link {{ request()->routeIs('etudiants.index') ? 'active' : '' }}">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Liste Etudiant</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item {{ request()->routeIs('notes.*') ? 'menu-open' : '' }}">
-              <a href="#" class="nav-link {{ request()->routeIs('notes.*') ? 'active' : '' }}">
-                <i class="nav-icon bi bi-box-seam-fill"></i>
-                <p>
-                  Gestions Notes
-                  <i class="nav-arrow bi bi-chevron-right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a wire:navigate href="{{ route('notes.saisie') }}" class="nav-link {{ request()->routeIs('notes.create') ? 'active' : '' }}">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Notes Etudiant</p>
-                  </a>
-                </li>
-                {{-- <li class="nav-item">
-                  <a wire:navigate href="{{ route('notes.index') }}" class="nav-link {{ request()->routeIs('notes.index') ? 'active' : '' }}">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Lise Notes Etudiant</p>
-                  </a>
-                </li> --}}
-                <li class="nav-item">
-                  <a wire:navigate href="{{route('notes.suivi-notes') }}" class="nav-link {{ request()->routeIs('notes.suivi-notes') ? 'active' : '' }}">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Suivi Notes Etudiant</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-			<li class="nav-item {{ request()->routeIs('parents.*') ? 'menu-open' : '' }}">
-              <a href="#" class="nav-link {{ request()->routeIs('parents.*') ? 'active' : '' }}">
-                <i class="nav-icon bi bi-box-seam-fill"></i>
-                <p>
-                  Informations Parents
-                  <i class="nav-arrow bi bi-chevron-right"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a wire:navigate href="{{ route('parents.create') }}" class="nav-link {{ request()->routeIs('parents.create') ? 'active' : '' }}">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Ajouter Parents</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a wire:navigate href="{{ route('parents.index') }}" class="nav-link {{ request()->routeIs('parents.index') ? 'active' : '' }}">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Liste Parents</p>
-                  </a>
-                </li>
-              </ul>
-
           </ul>
-          <!--end::Sidebar Menu-->
+          </li>
+          <li class="nav-item {{ request()->routeIs('matieres.*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ request()->routeIs('matieres.*') ? 'active' : '' }}">
+              <i class="nav-icon bi bi-box-seam-fill"></i>
+              <p>
+                Matieres
+                <i class="nav-arrow bi bi-chevron-right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('matieres.maj') }}"
+                  class="nav-link {{ request()->routeIs('matieres.maj') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Liste Matiere</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('classes-matieres.create') }}"
+                  class="nav-link {{ request()->routeIs('classes-matieres.create') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Classes_Matiers</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item {{ request()->routeIs('etudiants.*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ request()->routeIs('etudiants.*') ? 'active' : '' }}">
+              <i class="nav-icon bi bi-box-seam-fill"></i>
+              <p>
+                Etudiants
+                <i class="nav-arrow bi bi-chevron-right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a wire:navigate href="{{route('etudiants.create') }}"
+                  class="nav-link {{ request()->routeIs('etudiants.create') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Ajouter Etudiant</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('etudiants.index') }}"
+                  class="nav-link {{ request()->routeIs('etudiants.index') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Liste Etudiant</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item {{ request()->routeIs('notes.*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ request()->routeIs('notes.*') ? 'active' : '' }}">
+              <i class="nav-icon bi bi-box-seam-fill"></i>
+              <p>
+                Gestions Notes
+                <i class="nav-arrow bi bi-chevron-right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('notes.saisie') }}"
+                  class="nav-link {{ request()->routeIs('notes.create') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Notes Etudiant</p>
+                </a>
+              </li>
+              {{-- <li class="nav-item">
+                <a wire:navigate href="{{ route('notes.index') }}"
+                  class="nav-link {{ request()->routeIs('notes.index') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Lise Notes Etudiant</p>
+                </a>
+              </li> --}}
+              <li class="nav-item">
+                <a wire:navigate href="{{route('notes.suivi-notes') }}"
+                  class="nav-link {{ request()->routeIs('notes.suivi-notes') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Suivi Notes Etudiant</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item {{ request()->routeIs('parents.*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ request()->routeIs('parents.*') ? 'active' : '' }}">
+              <i class="nav-icon bi bi-box-seam-fill"></i>
+              <p>
+                Informations Parents
+                <i class="nav-arrow bi bi-chevron-right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('parents.create') }}"
+                  class="nav-link {{ request()->routeIs('parents.create') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Ajouter Parents</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('parents.index') }}"
+                  class="nav-link {{ request()->routeIs('parents.index') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Liste Parents</p>
+                </a>
+              </li>
+            </ul>
+
+            </ul>
+            <!--end::Sidebar Menu-->
         </nav>
       </div>
       <!--end::Sidebar Wrapper-->
@@ -339,15 +255,17 @@
   <!--begin::Script-->
   <!--begin::Third Party Plugin(OverlayScrollbars)-->
   <script src="{{ asset('dist/js/jquery.js') }}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-  </script>
-    <script src="{{ asset('dist/datepicker/flatpickr.min.js') }}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
+  <script src="{{ asset('dist/js/bootstrap.bundle.min.js') }}"> </script>
+  <script src="{{ asset('assets/fontawesome/fontaesome6-3-0.js') }}" crossorigin="anonymous"></script>
+  <script src="{{ asset('dist/datepicker/flatpickr.min.js') }}"></script>
+  <script src="{{ asset('dist/datepicker/l10n/fr.js') }}"></script>
+  <script src="{{ asset('dist/js/monthSelectIndex.js') }}"></script>
+  <script src="{{ asset('dist/js/select2.min.js') }}"></script>
   <script src="{{ asset('dist/js/adminlte.js') }}"></script>
 
   @livewireScripts {{-- Laissez Livewire Scripts en dernier --}}
 </body>
+
 </html>
 
 </body>
