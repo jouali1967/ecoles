@@ -162,6 +162,13 @@
                   <p>Liste Etudiant</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('etudiants.create.insc') }}"
+                  class="nav-link {{ request()->routeIs('etudiants.create.insc') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Nouvelle Inscription</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item {{ request()->routeIs('notes.*') ? 'menu-open' : '' }}">

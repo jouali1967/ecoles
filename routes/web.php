@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Etudiants\CreateInscription;
 use App\Livewire\Notes\SaisieNote;
 use App\Livewire\Parents\CreateParent;
 use App\Livewire\Parents\EditParent;
@@ -58,6 +59,9 @@ Route::middleware(['auth'])->group(function () {
       Route::get('/parents', ListParent::class)->name('parents.index');
       Route::get('/parents/create', CreateParent::class)->name('parents.create');
       Route::get('/parents/{id}/edit', EditParent::class)->name('parents.edit');
+      
+      //inscriptions
+      Route::get('/inscriptions/create', CreateInscription::class)->name('etudiants.create.insc');
 
   
 });

@@ -4,9 +4,12 @@
       style="justify-content:space-between; background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%); box-shadow: 0 2px 8px rgba(0,0,0,0.05); min-height:48px;">
       <h5 class="card-title mb-0 flex-grow-1 text-white fw-bold"
         style="font-size:1.15rem; letter-spacing:1px; text-shadow:0 1px 4px rgba(0,0,0,0.12);">
-        <i class="fas fa-users me-2"></i>Liste des Étudiants <span class="badge bg-light text-primary ms-2"
-          style="font-size:1rem;">Année Scolaire
-          {{ $annee_scol }}</span>
+        <i class="fas fa-users me-2"></i>Liste des Étudiants 
+        {{-- <span class="badge bg-light text-primary ms-2"
+          style="font-size:1rem;">
+          Année Scolaire
+          {{ $annee_scol }}
+        </span> --}}
       </h5>
       <a href="{{ route('etudiants.create') }}" class="btn btn-primary btn-sm ms-auto">
         <i class="fas fa-plus"></i> Nouvel Étudiant
