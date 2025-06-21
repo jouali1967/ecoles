@@ -14,11 +14,10 @@ class ListEtudiant extends Component
   public $sortField = 'nom';
   public $sortDirection = 'asc';
   public $annee_scol;
-  public $niv_scol;
 
   public function mount()
   {
-    $this->annee_scol = date('Y')  . '/' . (date('Y'))+1;
+    $this->annee_scol = (date('Y') - 1) . '/' . date('Y');
   }
 
   public function updatingSearch()
@@ -48,26 +47,23 @@ class ListEtudiant extends Component
   public function render()
   {
     $etudiants = Etudiant::query()
-      ->whereHas('lastInscription')
-      ->with(['lastInscription.classe'])
-      ->when($this->niv_scol, function ($query) {
-        $query->where('niv_scol', $this->niv_scol);
+      ->whereHas('inscriptions', function ($query) {
+        $query->where('annee_scol', $this->annee_scol);
       })
-
+      ->with(['inscriptions' => function ($query) {
+        $query->where('annee_scol', $this->annee_scol);
+      }, 'inscriptions.classe'])
       ->when($this->search, function ($query) {
         $query->where(function ($query) {
           $query->where('nom', 'like', '%' . $this->search . '%')
             ->orWhere('prenom', 'like', '%' . $this->search . '%')
-            ->orWhere('code_massar', 'like', '%' . $this->search . '%')
-            ->orWhere('cin_ar', 'like', '%' . $this->search . '%')
-            ->orWhere('num_enr', 'like', '%' . $this->search . '%');
+            ->orWhere('email', 'like', '%' . $this->search . '%');
         });
       })
       ->orderBy($this->sortField, $this->sortDirection)
       ->paginate(2);
     //dd($etudiants);
 
-    return view('livewire.etudiants.list-etudiant',
-     compact('etudiants'));
+    return view('livewire.etudiants.list-etudiant', compact('etudiants'));
   }
 }

@@ -20,6 +20,57 @@
               <i class="fas fa-user me-2"></i>Informations personnelles
             </h6>
           </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="num_enr" class="form-label">N° Enregistrement</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light">
+                  <i class="fas fa-user"></i>
+                </span>
+                <input type="text" wire:model.live='num_enr' class='form-control @error("num_enr") is-invalid @enderror'
+                  placeholder="Entrez le numero enregistrement">
+              </div>
+              @error('num_enr')
+              <div class="invalid-feedback d-block">{{ $message }}</div>
+              @enderror
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="code_massar" class="form-label">Code Massar</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light">
+                  <i class="fas fa-user"></i>
+                </span>
+                <input type="text" wire:model.live='code_massar'
+                  class='form-control @error("code_massar") is-invalid @enderror' placeholder="Entrez le code massar">
+              </div>
+              @error('code_massar')
+              <div class="invalid-feedback d-block">{{ $message }}</div>
+              @enderror
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group position-relative">
+              @if ($etud_photo)
+              <div class="position-absolute" style="top:-10px; right:-120px; z-index:2;">
+                <img src="{{ $etud_photo->temporaryUrl() }}" alt="Aperçu" class="rounded-circle"
+                  style="width:90px; height:90px; object-fit:cover; border:2px solid #ddd; background:#fff;" />
+              </div>
+              @endif
+              <label for="etud_photo" class="form-label">Photo Étudiant</label>
+              <div class="input-group align-items-center">
+                <span class="input-group-text bg-light">
+                  <i class="fas fa-image"></i>
+                </span>
+                <input type="file" wire:model='etud_photo'
+                  class='form-control @error("etud_photo") is-invalid @enderror' accept="image/*">
+              </div>
+              @error('etud_photo')
+              <div class="invalid-feedback d-block">{{ $message }}</div>
+              @enderror
+            </div>
+          </div>
 
           <div class="col-md-6">
             <div class="form-group">
@@ -44,7 +95,7 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='nom_ar' class='form-control @error("nom_ar") is-invalid @enderror'
+                <input type="text" wire:model.live='nom_ar' class='form-control @error("nom_ar") is-invalid @enderror'
                   placeholder="أدخل الاسم بالعربية" dir="rtl" lang="ar">
               </div>
               @error('nom_ar')
@@ -75,8 +126,9 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='prenom_ar' class='form-control @error("prenom_ar") is-invalid @enderror'
-                  placeholder="أدخل النسب بالعربية" dir="rtl" lang="ar">
+                <input type="text" wire:model.live='prenom_ar'
+                  class='form-control @error("prenom_ar") is-invalid @enderror' placeholder="أدخل النسب بالعربية"
+                  dir="rtl" lang="ar">
               </div>
               @error('prenom_ar')
               <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -106,7 +158,7 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='lieu_naiss_ar'
+                <input type="text" wire:model.live='lieu_naiss_ar'
                   class='form-control @error("lieu_naiss_ar") is-invalid @enderror' placeholder="مكان الولادة بالعربية"
                   dir="rtl" lang="ar">
               </div>
@@ -122,7 +174,7 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='cin_ar' class='form-control @error("cin_ar") is-invalid @enderror'
+                <input type="text" wire:model.live='cin_ar' class='form-control @error("cin_ar") is-invalid @enderror'
                   dir="rtl" lang="ar">
               </div>
               @error('cin_ar')
@@ -137,7 +189,7 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='num_acte_nais'
+                <input type="text" wire:model.libe='num_acte_nais'
                   class='form-control @error("num_acte_nais") is-invalid @enderror' dir="rtl" lang="ar">
               </div>
               @error('num_acte_nais')
@@ -152,8 +204,8 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='nom_pere' class='form-control @error("nom_pere") is-invalid @enderror'
-                  dir="rtl" lang="ar">
+                <input type="text" wire:model.live='nom_pere'
+                  class='form-control @error("nom_pere") is-invalid @enderror' dir="rtl" lang="ar">
               </div>
               @error('nom_pere')
               <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -167,8 +219,8 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='tel_pere' class='form-control @error("tel_pere") is-invalid @enderror'
-                  dir="rtl" lang="ar">
+                <input type="text" wire:model.live='tel_pere'
+                  class='form-control @error("tel_pere") is-invalid @enderror' dir="rtl" lang="ar">
               </div>
               @error('tel_pere')
               <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -182,8 +234,8 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='cin_pere' class='form-control @error("cin_pere") is-invalid @enderror'
-                  dir="rtl" lang="ar">
+                <input type="text" wire:model.live='cin_pere'
+                  class='form-control @error("cin_pere") is-invalid @enderror' dir="rtl" lang="ar">
               </div>
               @error('cin_pere')
               <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -197,8 +249,8 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='nom_mere' class='form-control @error("nom_pere") is-invalid @enderror'
-                  dir="rtl" lang="ar">
+                <input type="text" wire:model.live='nom_mere'
+                  class='form-control @error("nom_pere") is-invalid @enderror' dir="rtl" lang="ar">
               </div>
               @error('nom_mere')
               <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -212,8 +264,8 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='tel_mere' class='form-control @error("tel_mere") is-invalid @enderror'
-                  dir="rtl" lang="ar">
+                <input type="text" wire:model.live='tel_mere'
+                  class='form-control @error("tel_mere") is-invalid @enderror' dir="rtl" lang="ar">
               </div>
               @error('tel_mere')
               <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -227,8 +279,8 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='cin_mere' class='form-control @error("cin_mere") is-invalid @enderror'
-                  dir="rtl" lang="ar">
+                <input type="text" wire:model.live='cin_mere'
+                  class='form-control @error("cin_mere") is-invalid @enderror' dir="rtl" lang="ar">
               </div>
               @error('cin_mere')
               <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -263,7 +315,7 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='adresse_ben'
+                <input type="text" wire:model.live='adresse_ben'
                   class='form-control @error("adresse_ben") is-invalid @enderror' dir="rtl" lang="ar">
               </div>
               @error('adresse_ben')
@@ -331,7 +383,7 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <select wire:model='niv_scol' class='form-select @error("niv_scol") is-invalid @enderror' dir="rtl"
+                <select wire:model.live='niv_scol' class='form-select @error("niv_scol") is-invalid @enderror' dir="rtl"
                   lang="ar">
                   <option value="">اختر المستوى الدراسي</option>
                   <option value="IMAM MOUSLIM">IMAM MOUSLIM</option>
@@ -351,7 +403,7 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-calendar"></i>
                 </span>
-                <input type="text" wire:model='date_insc' id="date_insc"
+                <input type="text" wire:model.live='date_insc' id="date_insc"
                   class='form-control @error("date_insc") is-invalid @enderror' placeholder="JJ/MM/AAAA" dir="rtl"
                   lang="ar">
               </div>
@@ -367,7 +419,7 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-calendar"></i>
                 </span>
-                <input type="text" wire:model='date_sortie' id="date_sortie"
+                <input type="text" wire:model.live='date_sortie' id="date_sortie"
                   class='form-control @error("date_sortie") is-invalid @enderror' placeholder="JJ/MM/AAAA" dir="rtl"
                   lang="ar">
               </div>
@@ -383,7 +435,7 @@
               <div class="d-flex align-items-center justify-content-center gap-3" style="min-height:38px;">
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="ben_part" id="ben_part_oui" value="oui"
-                    wire:model.live="ben_part" checked>
+                    wire:model.live="ben_part">
                   <label class="form-check-label" for="ben_part_oui">نعم</label>
                 </div>
                 <div class="form-check">
@@ -406,68 +458,16 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='mont_part' class='form-control @error("mont_part") is-invalid @enderror'
-                  dir="rtl" lang="ar">
+                <input type="text" wire:model.live='mont_part'
+                  class='form-control @error("mont_part") is-invalid @enderror' dir="rtl" lang="ar">
               </div>
               @error('mont_part')
               <div class="invalid-feedback d-block">{{ $message }}</div>
               @enderror
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="adresse" class="form-label">Adresse</label>
-              <div class="input-group">
-                <span class="input-group-text bg-light">
-                  <i class="fas fa-map-marker-alt"></i>
-                </span>
-                <input type="text" wire:model='adresse' class='form-control @error("adresse") is-invalid @enderror'
-                  placeholder="Entrez l'adresse">
-              </div>
-              @error('adresse')
-              <div class="invalid-feedback">{{ $message }}</div>
-              @enderror
-            </div>
-          </div>
 
-          <!-- Coordonnées -->
-          <div class="col-12">
-            <h6 class="text-primary mb-3">
-              <i class="fas fa-address-card me-2"></i>Coordonnées
-            </h6>
-          </div>
 
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="phone" class="form-label">Téléphone</label>
-              <div class="input-group">
-                <span class="input-group-text bg-light">
-                  <i class="fas fa-phone"></i>
-                </span>
-                <input type="text" wire:model='phone' class='form-control @error("phone") is-invalid @enderror'
-                  placeholder="Entrez le numéro de téléphone">
-              </div>
-              @error('phone')
-              <div class="invalid-feedback">{{ $message }}</div>
-              @enderror
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="email" class="form-label">Email</label>
-              <div class="input-group">
-                <span class="input-group-text bg-light">
-                  <i class="fas fa-envelope"></i>
-                </span>
-                <input type="email" wire:model.live='email' class='form-control @error("email") is-invalid @enderror'
-                  placeholder="Entrez l'adresse email">
-              </div>
-              @error('email')
-              <div class="invalid-feedback">{{ $message }}</div>
-              @enderror
-            </div>
-          </div>
 
           <!-- Inscription -->
           <div class="col-12">
@@ -491,7 +491,7 @@
                 </select>
               </div>
               @error('classe_id')
-              <div class="invalid-feedback">{{ $message }}</div>
+              <div class="invalid-feedback d-block">{{ $message }}</div>
               @enderror
             </div>
           </div>
@@ -507,7 +507,7 @@
                   class='form-control @error("annee_scol") is-invalid @enderror' placeholder="Ex: 2023-2024">
               </div>
               @error('annee_scol')
-              <div class="invalid-feedback">{{ $message }}</div>
+              <div class="invalid-feedback d-block">{{ $message }}</div>
               @enderror
             </div>
           </div>
