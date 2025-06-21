@@ -5,11 +5,9 @@ use App\Livewire\Notes\SaisieNote;
 use App\Livewire\Parents\CreateParent;
 use App\Livewire\Parents\EditParent;
 use App\Livewire\Parents\ListParent;
-use App\Livewire\SuiviNote;
-use App\Livewire\Notes\EditNote;
+use App\Livewire\Notes\SuiviNote;
 use App\Livewire\Notes\ListNote;
 use App\Livewire\Admin\Dashboard;
-use App\Livewire\Notes\CreateNote;
 use App\Livewire\Classes\ListClasse;
 use App\Livewire\Classes\MajClasses;
 use Illuminate\Support\Facades\Auth;
@@ -54,11 +52,11 @@ Route::middleware(['auth'])->group(function () {
       //Route::get('/notes{note}/edit', EditNote::class)->name('notes.edit');
       Route::get('/notes/saisie', SaisieNote::class)->name('notes.saisie');
       // Route pour le suivi des notes
-      Route::get('/suivi-notes', SuiviNote::class)->name('notes.suivi-notes');
+      Route::get('notes/suivi-notes', SuiviNote::class)->name('notes.suivi-notes');
       // Route pour lien parental
-      Route::get('/parents', ListParent::class)->name('parents.index');
+      /*Route::get('/parents', ListParent::class)->name('parents.index');
       Route::get('/parents/create', CreateParent::class)->name('parents.create');
-      Route::get('/parents/{id}/edit', EditParent::class)->name('parents.edit');
+      Route::get('/parents/{id}/edit', EditParent::class)->name('parents.edit');*/
       
       //inscriptions
       Route::get('/inscriptions/create', CreateInscription::class)->name('etudiants.create.insc');

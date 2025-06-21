@@ -20,6 +20,18 @@ class SaisieNote extends Component
   public $selectedEtudiant;
   public $notesEtudiant;
   public $notes = [];
+  public $semestre;
+
+  public function mount()
+  {
+    // Déterminer automatiquement le semestre selon la date
+    $mois = date('n');
+    if ($mois >= 2 && $mois <= 8) {
+      $this->semestre = 2;
+    } else {
+      $this->semestre = 1;
+    }
+  }
 
   public function updatedSearchEtudiant()
   {
@@ -80,23 +92,23 @@ class SaisieNote extends Component
 
     // Pré-remplir les notes pour les champs de saisie
     foreach ($this->matieres as $matiere) {
-        $noteExistante = $this->notesEtudiant->get($matiere->id);
-        if ($noteExistante) {
-            $this->notes[$matiere->id] = [
-                'controle1' => $noteExistante->note1,
-                'controle2' => $noteExistante->note2,
-                'controle3' => $noteExistante->note3,
-                'controle4' => $noteExistante->note4,
-            ];
-        } else {
-            // Initialiser avec des valeurs null si aucune note n'existe, pour éviter les erreurs de liaison
-            $this->notes[$matiere->id] = [
-                'controle1' => null,
-                'controle2' => null,
-                'controle3' => null,
-                'controle4' => null,
-            ];
-        }
+      $noteExistante = $this->notesEtudiant->get($matiere->id);
+      if ($noteExistante) {
+        $this->notes[$matiere->id] = [
+          'controle1' => $noteExistante->note1,
+          'controle2' => $noteExistante->note2,
+          'controle3' => $noteExistante->note3,
+          'controle4' => $noteExistante->note4,
+        ];
+      } else {
+        // Initialiser avec des valeurs null si aucune note n'existe, pour éviter les erreurs de liaison
+        $this->notes[$matiere->id] = [
+          'controle1' => null,
+          'controle2' => null,
+          'controle3' => null,
+          'controle4' => null,
+        ];
+      }
     }
   }
 
@@ -108,13 +120,13 @@ class SaisieNote extends Component
   public function save()
   {
     if (!$this->selectedEtudiant) {
-        session()->flash('error', 'Aucun étudiant sélectionné. Impossible d\'enregistrer les notes.');
-        return;
+      session()->flash('error', 'Aucun étudiant sélectionné. Impossible d\'enregistrer les notes.');
+      return;
     }
 
     if (!$this->classe_etu) {
-        session()->flash('error', 'Les informations de la classe de l\'étudiant sont manquantes. Impossible d\'enregistrer les notes.');
-        return;
+      session()->flash('error', 'Les informations de la classe de l\'étudiant sont manquantes. Impossible d\'enregistrer les notes.');
+      return;
     }
 
     $anyNoteSaved = false;
@@ -150,18 +162,18 @@ class SaisieNote extends Component
         'etudiant_id' => $this->etudiant_id->id,
         'matiere_id' => $matiere_id,
         'note' => 10, // Ajustez cette valeur si nécessaire
-        'note1' => $controle1, 
-        'note2' => $controle2, 
-        'note3' => $controle3, 
-        'note4' => $controle4, 
+        'note1' => $controle1,
+        'note2' => $controle2,
+        'note3' => $controle3,
+        'note4' => $controle4,
         'note_calc' => $this->calculateNoteCalc(['controle1' => $controle1, 'controle2' => $controle2, 'controle3' => $controle3, 'controle4' => $controle4], $coefficient),
-        'semestre' => 2, // Assurez-vous que le semestre est correct
+        'semestre' => $this->semestre, // Utilisation automatique du semestre
         'annee_scol' => $this->annee_scol,
       ];
 
       $existingNote = Note::where('etudiant_id', $this->etudiant_id->id)
         ->where('matiere_id', $matiere_id)
-        ->where('semestre', 2) // Assurez-vous que le semestre est correct
+        ->where('semestre', $this->semestre) // Utilisation automatique du semestre
         ->where('annee_scol', $this->annee_scol)
         ->first();
 
@@ -174,26 +186,26 @@ class SaisieNote extends Component
     }
 
     if ($anyNoteSaved) {
-        session()->flash('message', 'Notes enregistrées avec succès.');
+      session()->flash('message', 'Notes enregistrées avec succès.');
     } else {
-        session()->flash('info', 'Aucune note à enregistrer ou mettre à jour.'); // Ou un message plus spécifique si des erreurs de coefficient ont eu lieu
+      session()->flash('info', 'Aucune note à enregistrer ou mettre à jour.'); // Ou un message plus spécifique si des erreurs de coefficient ont eu lieu
     }
     // Rediriger ou rafraîchir les données si nécessaire
     return redirect()->to('/notes/saisie'); // Exemple de redirection
   }
   protected function calculateNoteCalc($note_values, $coefficient)
-{
+  {
     // Récupérer les notes
     $notes = [
-        $note_values['controle1'] ?? null,
-        $note_values['controle2'] ?? null,
-        $note_values['controle3'] ?? null,
-        $note_values['controle4'] ?? null,
+      $note_values['controle1'] ?? null,
+      $note_values['controle2'] ?? null,
+      $note_values['controle3'] ?? null,
+      $note_values['controle4'] ?? null,
     ];
 
     // Filtrer les notes différentes de null
-    $notes = array_filter($notes, function($value) {
-        return $value !== null;
+    $notes = array_filter($notes, function ($value) {
+      return $value !== null;
     });
 
     // Calculer la somme
@@ -204,7 +216,6 @@ class SaisieNote extends Component
     $moyenne = $countNotes > 0 ? $somme / $countNotes : 0;
 
     // Calculer note_calc
-    return $moyenne ;
+    return $moyenne;
   }
-
 }
