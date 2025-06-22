@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EtudiantPdf;
+use App\Livewire\Editions\EtatEtudiant;
 use App\Livewire\Etudiants\CreateInscription;
 use App\Livewire\Notes\SaisieNote;
 use App\Livewire\Parents\CreateParent;
@@ -60,6 +62,9 @@ Route::middleware(['auth'])->group(function () {
       
       //inscriptions
       Route::get('/inscriptions/create', CreateInscription::class)->name('etudiants.create.insc');
+      //editions
+      Route::get('/editions/etudiants', EtatEtudiant::class)->name('editions.etat.etudiant');
+      Route::get('/editions/etudiants/pdf', [EtudiantPdf::class, 'generate'])->name('editions.etat_etud.pdf');
 
   
 });

@@ -205,6 +205,25 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item {{ request()->routeIs('editions.*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ request()->routeIs('editions.*') ? 'active' : '' }}">
+              <i class="nav-icon bi bi-box-seam-fill"></i>
+              <p>
+                Editions(PDF)
+                <i class="nav-arrow bi bi-chevron-right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('editions.etat.etudiant') }}"
+                  class="nav-link {{ request()->routeIs('editions.etat.etudiant') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Liste Etudiants</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
           {{-- <li class="nav-item {{ request()->routeIs('parents.*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link {{ request()->routeIs('parents.*') ? 'active' : '' }}">
               <i class="nav-icon bi bi-box-seam-fill"></i>

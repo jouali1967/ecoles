@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Classe extends Model
 {
     use HasFactory;
-    protected $fillable=['nom_classe'];
+    protected $fillable=['nom_classe','abr_classe'];
     public function matieres(){
       return $this->belongsToMany(Matiere::class, 'classes_matieres')
                   ->withPivot('coefficient');

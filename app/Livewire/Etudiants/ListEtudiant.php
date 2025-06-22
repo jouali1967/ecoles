@@ -4,11 +4,15 @@ namespace App\Livewire\Etudiants;
 
 use App\Models\Etudiant;
 use Livewire\Component;
+use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 
 class ListEtudiant extends Component
 {
   use WithPagination;
+  use WithoutUrlPagination;
+  public $paginationTheme="bootstrap";
+
 
   public $search = '';
   public $sortField = 'nom';

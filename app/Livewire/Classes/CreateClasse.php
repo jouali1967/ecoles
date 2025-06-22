@@ -9,11 +9,13 @@ use App\Models\Inscription;
 class CreateClasse extends Component
 {
     public $nom_classe;
+    public $abr_classe;
     public $editing = false;
     public $classe_id;
 
     protected $rules = [
         'nom_classe' => 'required',
+        'abr_classe' => 'required',
     ];
 
     protected $listeners = ['editClasse'];
@@ -24,6 +26,7 @@ class CreateClasse extends Component
         if ($classe) {
             $this->classe_id = $classe->id;
             $this->nom_classe = $classe->nom_classe;
+            $this->abr_classe = $classe->abr_classe;
             $this->editing = true;
         }
     }
@@ -45,16 +48,18 @@ class CreateClasse extends Component
             $classe = Classe::find($this->classe_id);
             $classe->update([
                 'nom_classe' => $this->nom_classe,
+                'abr_classe' => $this->abr_classe,
             ]);
             session()->flash('message', 'Classe mise à jour avec succès.');
         } else {
             Classe::create([
                 'nom_classe' => $this->nom_classe,
+                'abr_classe' => $this->abr_classe,
             ]);
             session()->flash('message', 'Classe créée avec succès.');
         }
 
-        $this->reset(['nom_classe', 'editing', 'classe_id']);
+        $this->reset(['nom_classe','abr_classe', 'editing', 'classe_id']);
         $this->dispatch('actualiser');
     }
 

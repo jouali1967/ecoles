@@ -10,6 +10,11 @@
           <input type="text" wire:model="nom_classe" class="form-control" id="nom_classe">
           @error('nom_classe') <span class="text-danger">{{ $message }}</span> @enderror
         </div>
+        <div class="form-group mb-3">
+          <label for="abr_classe" class="form-label">Abrviation de la classe</label>
+          <input type="text" wire:model="abr_classe" class="form-control" id="abr_classe">
+          @error('abr_classe') <span class="text-danger">{{ $message }}</span> @enderror
+        </div>
 
         <div class="mt-3">
           <button type="submit" class="btn btn-primary">
