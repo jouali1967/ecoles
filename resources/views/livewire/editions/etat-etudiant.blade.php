@@ -35,7 +35,7 @@
               </div>
             </div>
 
-            <div class="col-md-3">
+            {{-- <div class="col-md-3">
               <div class="form-group mb-0">
                 <label for="niv_scol" class="form-label small">Niveau Scolaire</label>
                 <select wire:model="niv_scol" id="niv_scol" class="form-select form-select-sm">
@@ -45,7 +45,7 @@
                 </select>
                 @error('niv_scol') <span class="text-danger small">{{ $message }}</span> @enderror
               </div>
-            </div>
+            </div> --}}
             <div class="col-md-3">
               <div class="form-group mb-0">
                 <label for="scol_lib" class="form-label small">Niveau Scolaire</label>

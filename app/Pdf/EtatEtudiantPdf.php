@@ -6,11 +6,13 @@ use TCPDF;
 
 class EtatEtudiantPdf extends TCPDF
 {
-   protected $titre_niv;
-  public function __construct($titre_niv)
+  protected $annee_insc;
+  protected $scol_lib;
+  public function __construct($annee_insc = null, $scol_lib = null)
   {
     parent::__construct('P', 'mm', 'A4', true, 'UTF-8', false);
-     $this->titre_niv = $titre_niv;
+    $this->annee_insc = $annee_insc;
+    $this->scol_lib = $scol_lib;
     // Configuration du PDF
     $this->SetCreator('Laravel App');
     $this->SetAuthor('Système de Gestion');
@@ -27,17 +29,26 @@ class EtatEtudiantPdf extends TCPDF
   // Header personnalisé
   public function Header()
   {
-    // Logo ou en-tête entreprise
     if ($this->page == 1) {
+      $titre = "Liste des etudiants";
+      if ($this->scol_lib && $this->annee_insc) {
+        $titre .= " {$this->scol_lib} inscrits en {$this->annee_insc}";
+      } elseif ($this->scol_lib) {
+        $titre .= " {$this->scol_lib}";
+      } elseif ($this->annee_insc) {
+        $titre .= " inscrits en {$this->annee_insc}";
+      } else {
+        $titre .= " globale";
+      }
       $this->SetFont('helvetica', 'B', 14);
-      $this->Cell(0, 0, "Liste des etudiants ".$this->titre_niv, 0, 1, 'C');
+      $this->Cell(0, 0, $titre, 0, 1, 'C');
       $this->SetXY(5, 14);
       $this->SetFont('helvetica', 'B', 9);
       $this->MultiCell(10, 6, "N°", 1, 'C', 0, 0, null, null, true, 0, false, true, 6, 'M');
       $this->MultiCell(15, 6, "N° INSC.", 1, 'C', 0, 0, null, null, true, 0, false, true, 6, 'M');
       $this->MultiCell(20, 6, "Massar", 1, 'C', 0, 0, null, null, true, 0, false, true, 6, 'M');
       $this->MultiCell(60, 6, "Nom et Prénom", 1, 'C', 0, 0, null, null, true, 0, false, true, 6, 'M');
-      $this->MultiCell(40, 6, "Niveau scol.", 1, 'C', 0, 0, null, null, true, 0, false, true, 6, 'M');
+      $this->MultiCell(40, 6, "Etablissment", 1, 'C', 0, 0, null, null, true, 0, false, true, 6, 'M');
       $this->MultiCell(15, 6, "Classe", 1, 'C', 0, 0, null, null, true, 0, false, true, 6, 'M');
       $this->MultiCell(20, 6, "Date INSC.", 1, 'C', 0, 0, null, null, true, 0, false, true, 6, 'M');
     }

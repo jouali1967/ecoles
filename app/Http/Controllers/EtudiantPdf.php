@@ -8,34 +8,24 @@ use Illuminate\Http\Request;
 
 class EtudiantPdf extends Controller
 {
-    public function generate(Request $request){
-      $niv_scol = $request->input('niv_scol');
-      $annee_insc = $request->input('annee_insc');
-      $scol_lib = $request->input('scol_lib');
-      $titre_niv="Globale";
-      $etudiants = Etudiant::query()
-        ->whereHas('lastInscription')
-        ->with(['lastInscription.classe'])
-        ->when($annee_insc, function ($query) use ($annee_insc) {
-            $query->whereYear('date_insc', $annee_insc);
-        })
-        ->when($scol_lib, function ($query) use ($scol_lib) {
-            $query->where('niv_scol', $scol_lib);
-        })
-        ->when($niv_scol, function ($query) use (&$titre_niv,$niv_scol) {
-            if ($niv_scol == 'LYCEE') {
-               $titre_niv="LYCCE";
-                $scolaire = ['LYCEE CHAOUKI', 'LYCEE MOULAY ABDELLAH'];
-                $query->whereIn('niv_scol', $scolaire);
-            } else {
-                $titre_niv="COLLEGE";
-                $scolaire = ['IMAM MOUSLIM'];
-                $query->whereIn('niv_scol', $scolaire);
-            }
-        })
-        ->get();
+  public function generate(Request $request)
+  {
+    $annee_insc = $request->input('annee_insc');
+    $scol_lib = $request->input('scol_lib');
+    $etudiants = Etudiant::query()
+      ->whereHas('lastInscription')
+      ->with(['lastInscription.classe'])
+      ->when($annee_insc, function ($query) use (&$titre_an, $annee_insc) {
+        //$titre_an='incsrits en '.$annee_insc;
+        $query->whereYear('date_insc', $annee_insc);
+      })
+      ->when($scol_lib, function ($query) use (&$titre_niv, $scol_lib) {
+        //$titre_niv=$scol_lib;  
+        $query->where('niv_scol', $scol_lib);
+      })
+      ->get();
 
-    $pdf = new EtatEtudiantPdf($titre_niv);
+    $pdf = new EtatEtudiantPdf($annee_insc,$scol_lib);
     $pdf->AddPage();
     $pdf->SetY(20);
 
@@ -62,6 +52,5 @@ class EtudiantPdf extends Controller
 
     // Génération du PDF
     return $pdf->Output('etat_etudiants_' . date('Y-m-d') . '.pdf', 'I');
-
-    }
+  }
 }

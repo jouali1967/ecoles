@@ -15,7 +15,6 @@ class EtatEtudiant extends Component
 
   public $annee_inscriptions;
   public $annee_inscription;
-  public $niv_scol;
   public $scol_lib;
   public $showResults = false;
 
@@ -47,7 +46,6 @@ class EtatEtudiant extends Component
   public function imprimer()
   {
     $params = route('editions.etat_etud.pdf', [
-      'niv_scol' => $this->niv_scol ?? '',
       'annee_insc' => $this->annee_inscription ?? '',
       'scol_lib' => $this->scol_lib ?? '',
     ]);
@@ -65,15 +63,6 @@ class EtatEtudiant extends Component
         })
         ->when($this->scol_lib, function ($query) {
           $query->where('niv_scol', $this->scol_lib);
-        })
-        ->when($this->niv_scol, function ($query) {
-          if ($this->niv_scol == 'LYCEE') {
-            $scolaire = ['LYCEE CHAOUKI', 'LYCEE MOULAY ABDELLAH'];
-            $query->whereIn('niv_scol', $scolaire);
-          } else {
-            $scolaire = ['IMAM MOUSLIM'];
-            $query->whereIn('niv_scol', $scolaire);
-          }
         })
         ->paginate(10);
     }
