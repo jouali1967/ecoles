@@ -102,15 +102,27 @@ class CreateEtudiant extends Component
   public function save()
   {
     $dataEtudiant = $this->validate();
-    // Gestion de l'upload de la photo
-    $photoPath = null;
-    if ($this->etud_photo) {
-      $photoPath = $this->etud_photo->store('photos', 'public');
-      $dataEtudiant['etud_photo'] = $photoPath;
-    } else {
-      $dataEtudiant['etud_photo'] = null; // Ou laissez-le vide selon vos besoins
+    // S'assurer que le dossier uploads existe
+    if (!file_exists(public_path('uploads'))) {
+      mkdir(public_path('uploads'), 0777, true);
     }
-
+    // Gestion de l'upload de la photo
+    if ($this->etud_photo) {
+      $nomFichier = uniqid() . '.' . $this->etud_photo->getClientOriginalExtension();
+      $destination = public_path('uploads/' . $nomFichier);
+      $tmpPath = $this->etud_photo->getRealPath();
+      // Utiliser copy() puis unlink() pour éviter les problèmes de verrouillage Windows
+      if (copy($tmpPath, $destination)) {
+        @unlink($tmpPath);
+        $dataEtudiant['etud_photo'] = $nomFichier;
+      } else {
+        // Gestion d'erreur explicite
+        session()->flash('error', "Erreur lors de la copie de la photo. Vérifiez les permissions du dossier uploads.");
+        return;
+      }
+    } else {
+      $dataEtudiant['etud_photo'] = null;
+    }
     //Créer un nouvel étudiant
     $etudiant = Etudiant::create($dataEtudiant);
     // Créer l'inscription

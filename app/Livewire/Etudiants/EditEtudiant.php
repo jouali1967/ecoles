@@ -122,7 +122,7 @@ class EditEtudiant extends Component
     // $inscription = $etudiant->inscriptions()->latest()->first();
     // $this->classe_id = $inscription ? $inscription->classe_id : null;
     // $this->annee_scol = $inscription ? $inscription->annee_scol : null;
-    
+
     $inscriptions = $etudiant->inscriptions()->get();
     $derniereInscription = $inscriptions->sortByDesc('annee_scol')->first();
     $this->classe_id = $derniereInscription ? $derniereInscription->classe_id : null;
@@ -136,7 +136,20 @@ class EditEtudiant extends Component
     $validatedData = $this->validate();
     // Gestion de la photo : nouvelle ou ancienne
     if ($this->etud_photo) {
-      $validatedData['etud_photo'] = $this->etud_photo->store('photos', 'public');
+      // S'assurer que le dossier uploads existe
+      if (!file_exists(public_path('uploads'))) {
+        mkdir(public_path('uploads'), 0777, true);
+      }
+      $nomFichier = uniqid() . '.' . $this->etud_photo->getClientOriginalExtension();
+      $destination = public_path('uploads/' . $nomFichier);
+      $tmpPath = $this->etud_photo->getRealPath();
+      if (copy($tmpPath, $destination)) {
+        @unlink($tmpPath);
+        $validatedData['etud_photo'] = $nomFichier;
+      } else {
+        session()->flash('error', "Erreur lors de la copie de la photo. Vérifiez les permissions du dossier uploads.");
+        return;
+      }
     } else {
       $validatedData['etud_photo'] = $this->etudiant->etud_photo;
     }

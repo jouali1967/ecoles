@@ -161,7 +161,6 @@ class SaisieNote extends Component
       $noteData = [
         'etudiant_id' => $this->etudiant_id->id,
         'matiere_id' => $matiere_id,
-        'note' => 10, // Ajustez cette valeur si nécessaire
         'note1' => $controle1,
         'note2' => $controle2,
         'note3' => $controle3,
@@ -169,6 +168,7 @@ class SaisieNote extends Component
         'note_calc' => $this->calculateNoteCalc(['controle1' => $controle1, 'controle2' => $controle2, 'controle3' => $controle3, 'controle4' => $controle4], $coefficient),
         'semestre' => $this->semestre, // Utilisation automatique du semestre
         'annee_scol' => $this->annee_scol,
+        'coefficient'=>$coefficient
       ];
 
       $existingNote = Note::where('etudiant_id', $this->etudiant_id->id)

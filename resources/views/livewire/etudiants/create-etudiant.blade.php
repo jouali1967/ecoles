@@ -63,8 +63,8 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-image"></i>
                 </span>
-                <input type="file" wire:model='etud_photo'
-                  class='form-control @error("etud_photo") is-invalid @enderror' accept="image/*">
+                <input type="file" wire:model="etud_photo"
+                  class="form-control @error('etud_photo') is-invalid @enderror" accept="image/*">
               </div>
               @error('etud_photo')
               <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -378,14 +378,14 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label for="niv_scol" class="form-label text-end w-100">المستوى الدراسي</label>
+              <label for="niv_scol" class="form-label text-end w-100">اسم المؤسسة</label>
               <div class="input-group">
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
                 <select wire:model.live='niv_scol' class='form-select @error("niv_scol") is-invalid @enderror' dir="rtl"
                   lang="ar">
-                  <option value="">اختر المستوى الدراسي</option>
+                  <option value="">اسم المؤسسة</option>
                   <option value="IMAM MOUSLIM">IMAM MOUSLIM</option>
                   <option value="LYCEE CHAOUKI">LYCEE CHAOUKI</option>
                   <option value="LYCEE MOULAY ABDELLAH">LYCEE MOULAY ABDELLAH</option>

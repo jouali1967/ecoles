@@ -64,7 +64,7 @@ class EtatEtudiant extends Component
         ->when($this->scol_lib, function ($query) {
           $query->where('niv_scol', $this->scol_lib);
         })
-        ->paginate(10);
+        ->paginate(5);
     }
     return view('livewire.editions.etat-etudiant', [
       'etudiants' => $etudiants

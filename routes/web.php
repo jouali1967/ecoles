@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\EtudiantPdf;
+use App\Http\Controllers\ScoreEtudiantPdf;
 use App\Livewire\Editions\EtatEtudiant;
+use App\Livewire\Editions\ScoreEtudiants;
 use App\Livewire\Etudiants\CreateInscription;
 use App\Livewire\Notes\SaisieNote;
 use App\Livewire\Parents\CreateParent;
@@ -65,6 +67,8 @@ Route::middleware(['auth'])->group(function () {
       //editions
       Route::get('/editions/etudiants', EtatEtudiant::class)->name('editions.etat.etudiant');
       Route::get('/editions/etudiants/pdf', [EtudiantPdf::class, 'generate'])->name('editions.etat_etud.pdf');
+      Route::get('/editions/score', ScoreEtudiants::class)->name('editions.score.etudiants');
+      Route::get('/editions/score/pdf', [ScoreEtudiantPdf::class,'generate'])->name('editions.score.pdf');
 
   
 });

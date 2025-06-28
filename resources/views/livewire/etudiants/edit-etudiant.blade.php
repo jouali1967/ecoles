@@ -59,7 +59,7 @@
               </div>
               @elseif ($etud_photo_db)
               <div class="position-absolute" style="top:-10px; right:-120px; z-index:2;">
-                <img src="{{ asset('storage/' . $etud_photo_db) }}" alt="Aperçu" class="rounded-circle"
+                <img src="{{ asset('uploads/' . $etud_photo_db) }}" alt="Aperçu" class="rounded-circle"
                   style="width:90px; height:90px; object-fit:cover; border:2px solid #ddd; background:#fff;" />
               </div>
               @endif
@@ -383,14 +383,14 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label for="niv_scol" class="form-label text-end w-100">المستوى الدراسي</label>
+              <label for="niv_scol" class="form-label text-end w-100">اسم المؤسسة</label>
               <div class="input-group">
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
                 <select wire:model.live='niv_scol' class='form-select @error("niv_scol") is-invalid @enderror' dir="rtl"
                   lang="ar">
-                  <option value="">اختر المستوى الدراسي</option>
+                  <option value="">اختر اسم المؤسسة</option>
                   <option value="IMAM MOUSLIM">IMAM MOUSLIM</option>
                   <option value="LYCEE CHAOUKI">LYCEE CHAOUKI</option>
                   <option value="LYCEE MOULAY ABDELLAH">LYCEE MOULAY ABDELLAH</option>

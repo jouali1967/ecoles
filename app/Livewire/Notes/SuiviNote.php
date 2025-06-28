@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Notes;
 
+use App\Models\Note;
 use Livewire\Component;
 use App\Models\Etudiant;
 use App\Models\Inscription;

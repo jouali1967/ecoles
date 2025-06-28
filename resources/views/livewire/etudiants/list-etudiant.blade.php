@@ -63,7 +63,7 @@
               <td>{{ $i++ }}</td>
               <td>
                 @if($etudiant->etud_photo)
-                <img src="{{ asset('storage/' . $etudiant->etud_photo) }}" alt="Photo" class="rounded-circle"
+                <img src="{{ asset('uploads/' . $etudiant->etud_photo) }}" alt="Photo" class="rounded-circle"
                   style="width:40px; height:40px; object-fit:cover;">
                 @else
                 <span class="text-muted">-</span>

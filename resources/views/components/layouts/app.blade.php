@@ -221,6 +221,13 @@
                   <p>Liste Etudiants</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('editions.score.etudiants') }}"
+                  class="nav-link {{ request()->routeIs('editions.score.etudiants') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Score Etudiants</p>
+                </a>
+              </li>
             </ul>
           </li>
 
