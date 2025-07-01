@@ -330,8 +330,16 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='dom_ter' class='form-control @error("dom_ter") is-invalid @enderror'
-                  dir="rtl" lang="ar">
+                <select wire:model.live='dom_ter' class='form-select @error("dom_ter") is-invalid @enderror' dir="rtl"
+                  lang="ar">
+                  <option value="">اختر المجال الترابي</option>
+                  <option value="جماعة مولاي عبدالله">جماعة مولاي عبدالله</option>
+                  <option value="جماعة الجديدة">جماعة الجديدة</option>
+                  <option value="جماعة الحوزية">جماعة الحوزية</option>
+                  <option value="جماعة اولاد احسين">جماعة اولاد احسين</option>
+                  <option value="جماعة سيدي عابد">جماعة سيدي عابد</option>
+                  <option value="جماعة الشعيبات">جماعة الشعيبات</option>
+                </select>
               </div>
               @error('dom_ter')
               <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -345,7 +353,7 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                  <select wire:model.live='sit_soc' class='form-select @error("sit_soc") is-invalid @enderror' dir="rtl"
+                <select wire:model.live='sit_soc' class='form-select @error("sit_soc") is-invalid @enderror' dir="rtl"
                   lang="ar">
                   <option value="">اختر الوضع الاجتماعي</option>
                   <option value="فقر">فقر</option>
