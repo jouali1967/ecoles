@@ -229,6 +229,20 @@
                 </a>
               </li>
             </ul>
+            <li class="nav-item">
+              <a wire:navigate href="{{ route('editions.filter.etudiants') }}"
+                class="nav-link {{ request()->routeIs('editions.filter.etudiants') ? 'active' : '' }}">
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Score Etudiants(filter)</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a wire:navigate href="{{ route('editions.listbenif.etudiants') }}"
+                class="nav-link {{ request()->routeIs('editions.listbenif.etudiants') ? 'active' : '' }}">
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Liste Benificiares</p>
+              </a>
+            </li>
           </li>
 
           {{-- <li class="nav-item {{ request()->routeIs('parents.*') ? 'menu-open' : '' }}">
@@ -275,12 +289,12 @@
     <!--begin::Footer-->
     <footer class="app-footer">
       <!--begin::To the end-->
-      <div class="float-end d-none d-sm-inline">Anything you want</div>
+      <div class="float-end d-none d-sm-inline"></div>
       <!--end::To the end-->
       <!--begin::Copyright-->
       <strong>
         Copyright &copy; 2025-2026&nbsp;
-        <a href="#" class="text-decoration-none">Gestions Des Employés</a>.
+        <a href="#" class="text-decoration-none">Gestions Des Etudiants</a>.
       </strong>
       All rights reserved.
       <!--end::Copyright-->

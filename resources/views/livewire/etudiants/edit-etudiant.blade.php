@@ -350,8 +350,13 @@
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                <input type="text" wire:model='sit_soc' class='form-control @error("sit_soc") is-invalid @enderror'
-                  dir="rtl" lang="ar">
+                  <select wire:model.live='sit_soc' class='form-select @error("sit_soc") is-invalid @enderror' dir="rtl"
+                  lang="ar">
+                  <option value="">اختر الوضع الاجتماعي</option>
+                  <option value="فقر">فقر</option>
+                  <option value="متوسط الحال">متوسط الحال</option>
+                  <option value="متخلى عنه">متخلى عنه</option>
+                </select>
               </div>
               @error('sit_soc')
               <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -483,13 +488,13 @@
 
           <div class="col-md-6">
             <div class="form-group">
-              <label for="classe" class="form-label">Classe</label>
+              <label for="classe" class="form-label">Niveau Scolaire</label>
               <div class="input-group">
                 <span class="input-group-text bg-light">
                   <i class="fas fa-chalkboard"></i>
                 </span>
                 <select wire:model.live='classe_id' class='form-select @error("classe_id") is-invalid @enderror'>
-                  <option value="">Choisir une classe</option>
+                  <option value="">Choix niveau</option>
                   @foreach ($classes as $classe)
                   <option value="{{ $classe->id }}">{{$classe->nom_classe}}</option>
                   @endforeach

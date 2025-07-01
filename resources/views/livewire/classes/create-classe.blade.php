@@ -1,7 +1,7 @@
 <div>
   <div class="card">
     <div class="card-header">
-      <h5 class="card-title">{{ $editing ? 'Modifier la Classe' : 'Ajouter une Classe' }}</h5>
+      <h5 class="card-title">{{ $editing ? 'Modifier Niveau scolaire' : 'Ajouter Niveau scolaire' }}</h5>
     </div>
     <div class="card-body">
       <form wire:submit.prevent="save">

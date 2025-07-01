@@ -68,7 +68,7 @@ class ListEtudiant extends Component
         });
       })
       ->orderBy($this->sortField, $this->sortDirection)
-      ->paginate(2);
+      ->paginate(5);
     //dd($etudiants);
 
     return view('livewire.etudiants.list-etudiant',

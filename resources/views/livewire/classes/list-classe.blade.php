@@ -1,7 +1,7 @@
 <div>
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">Liste classes</h5>
+      <h5 class="card-title">Liste Niveau Scolaire</h5>
       <table class="table table-bordered table-striped table-sm">
         <thead>
           <th>Nom Classe</th>

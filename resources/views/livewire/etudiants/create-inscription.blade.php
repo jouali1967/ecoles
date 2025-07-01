@@ -128,9 +128,9 @@
       <div class="row">
         <div class="col-12">
           <div class="d-flex justify-content-end gap-2">
-            <a href="{{ route('parents.index') }}" class="btn btn-secondary">
+            {{-- <a href="{{ route('parents.index') }}" class="btn btn-secondary">
               <i class="fas fa-times me-1"></i>Annuler
-            </a>
+            </a> --}}
             <button type="submit" class="btn btn-primary">
               <i class="fas fa-save me-1"></i>Enregistrer
             </button>

@@ -8,7 +8,8 @@ use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithoutUrlPagination;
 
-class ScoreEtudiants extends Component
+
+class ScoreFilter extends Component
 {
   use WithPagination;
   use WithoutUrlPagination;
@@ -18,6 +19,9 @@ class ScoreEtudiants extends Component
   public $semestre;
   public $annees_scolaires;
   public $showResults = false;
+    public $superieur_a;
+  public $inferieur_a;
+
   public function mount()
   {
     // Récupérer les années scolaires distinctes depuis la table inscriptions
@@ -71,21 +75,26 @@ class ScoreEtudiants extends Component
           'classes.nom_classe',
           'classes.abr_classe'
         )
-        // ->havingRaw('SUM(notes.note_calc * notes.coefficient) / NULLIF(SUM(notes.coefficient), 0) > 11')
-        //  ->havingRaw('SUM(notes.note_calc * notes.coefficient) / NULLIF(SUM(notes.coefficient), 0) > 11 
-        //              AND SUM(notes.note_calc * notes.coefficient) / NULLIF(SUM(notes.coefficient), 0) < 12')
+        ->havingRaw(
+        'SUM(notes.note_calc * notes.coefficient) / NULLIF(SUM(notes.coefficient), 0) > ? 
+         AND SUM(notes.note_calc * notes.coefficient) / NULLIF(SUM(notes.coefficient), 0) < ?',
+        [$this->superieur_a, $this->inferieur_a]
+    )
         ->orderBy('moyenne', 'desc')
         ->paginate(5);
     }
 
-    return view('livewire.editions.score-etudiants',compact('etudiants'));
+    return view('livewire.editions.score-filter',compact('etudiants'));
   }
 
-  public function imprimer(){
-      $params = route('editions.score.pdf', [
+    public function imprimer(){
+      $params = route('editions.filter.pdf', [
       'annee_scol' => $this->annee_scolaire ?? '',
       'semestre' => $this->semestre ?? '',
+      'superieur_a'=>$this->superieur_a,
+      'inferieur_a'=>$this->inferieur_a
     ]);
     $this->dispatch('openEtatWindow', url: $params);
   }
+
 }

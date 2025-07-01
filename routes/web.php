@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\EtudiantPdf;
+use App\Http\Controllers\FilterScoreController;
+use App\Http\Controllers\ListBenifController;
 use App\Http\Controllers\ScoreEtudiantPdf;
 use App\Livewire\Editions\EtatEtudiant;
+use App\Livewire\Editions\ListBenif;
 use App\Livewire\Editions\ScoreEtudiants;
+use App\Livewire\Editions\ScoreFilter;
 use App\Livewire\Etudiants\CreateInscription;
 use App\Livewire\Notes\SaisieNote;
 use App\Livewire\Parents\CreateParent;
@@ -69,6 +73,12 @@ Route::middleware(['auth'])->group(function () {
       Route::get('/editions/etudiants/pdf', [EtudiantPdf::class, 'generate'])->name('editions.etat_etud.pdf');
       Route::get('/editions/score', ScoreEtudiants::class)->name('editions.score.etudiants');
       Route::get('/editions/score/pdf', [ScoreEtudiantPdf::class,'generate'])->name('editions.score.pdf');
+      
+      Route::get('/editions/filter/pdf', [FilterScoreController::class,'generate'])->name('editions.filter.pdf');
+      Route::get('/editions/filter', ScoreFilter::class)->name('editions.filter.etudiants');
+      
+      Route::get('/editions/listbenif', ListBenif::class)->name('editions.listbenif.etudiants');
+      Route::get('/editions/listbenif/pdf', [ListBenifController::class,'generate'])->name('editions.listbenif.pdf');
 
   
 });

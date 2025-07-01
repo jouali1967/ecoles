@@ -18,10 +18,9 @@ class CreateEtudiant extends Component
   #[Rule('required', message: 'Le code massar est obligatoire.')]
   public $code_massar;
   #[Rule('required', message: 'Le nom est obligatoire.')]
-  #[Rule('regex:/^[a-z0-9\s]+$/', message: 'Le nom oblogatoire, des chiffres et des espaces.')]
   public $nom;
   #[Rule('required', message: 'Le prenom est obligatoire.')]
-  #[Rule('regex:/^[a-z0-9\s]+$/', message: 'Le prénom oblogatoire, des chiffres et des espaces.')]
+  // #[Rule('regex:/^[a-z0-9\s]+$/', message: 'Le prénom oblogatoire, des chiffres et des espaces.')]
   public $prenom;
   #[Rule('required', message: 'Nom arabe obligatoire')]
   #[Rule('regex:/^[\x{0600}-\x{06FF} ]+$/u', message: 'Nom doit etre en arabe')]
@@ -61,7 +60,7 @@ class CreateEtudiant extends Component
   #[Rule('nullable')]
   #[Rule('regex:/^[\x{0600}-\x{06FF} ]+$/u', message: 'Nom doit etre en arabe')]
   public $dom_ter;
-  #[Rule('nullable')]
+  #[Rule('required',message:'الوضع الاجتماعي ضروري')]
   #[Rule('regex:/^[\x{0600}-\x{06FF} ]+$/u', message: 'Nom doit etre en arabe')]
   public $sit_soc;
   #[Rule('required', message: 'Sexe est obligatoire')]
