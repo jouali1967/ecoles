@@ -228,28 +228,29 @@
                   <p>Score Etudiants</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('editions.filter.etudiants') }}"
+                  class="nav-link {{ request()->routeIs('editions.filter.etudiants') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Score Etudiants(filter)</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('editions.listbenif.etudiants') }}"
+                  class="nav-link {{ request()->routeIs('editions.listbenif.etudiants') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Liste Benificiares</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('editions.listterit.etudiants') }}"
+                  class="nav-link {{ request()->routeIs('editions.listterit.etudiants') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Etudiants par Dom.teri</p>
+                </a>
+              </li>
             </ul>
-            <li class="nav-item">
-              <a wire:navigate href="{{ route('editions.filter.etudiants') }}"
-                class="nav-link {{ request()->routeIs('editions.filter.etudiants') ? 'active' : '' }}">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Score Etudiants(filter)</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a wire:navigate href="{{ route('editions.listbenif.etudiants') }}"
-                class="nav-link {{ request()->routeIs('editions.listbenif.etudiants') ? 'active' : '' }}">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Liste Benificiares</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a wire:navigate href="{{ route('editions.listterit.etudiants') }}"
-                class="nav-link {{ request()->routeIs('editions.listterit.etudiants') ? 'active' : '' }}">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Etudiants par Dom.teri</p>
-              </a>
-            </li>
+
           </li>
 
           {{-- <li class="nav-item {{ request()->routeIs('parents.*') ? 'menu-open' : '' }}">

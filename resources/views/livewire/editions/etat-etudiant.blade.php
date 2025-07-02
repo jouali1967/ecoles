@@ -48,7 +48,7 @@
             </div> --}}
             <div class="col-md-3">
               <div class="form-group mb-0">
-                <label for="scol_lib" class="form-label small">Niveau Scolaire</label>
+                <label for="scol_lib" class="form-label small">Etablissement</label>
                 <select wire:model='scol_lib' class='form-select @error("scol_lib") is-invalid @enderror' dir="rtl"
                   lang="ar">
                   <option value="">اختر المستوى الدراسي</option>
