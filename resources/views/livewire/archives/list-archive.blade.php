@@ -43,7 +43,10 @@
     </form>
     @if($showResults)
     @if($archives->count())
-    <div class="mb-2 d-flex justify-content-end">
+    <div class="mb-2 d-flex justify-content-between align-items-center">
+      <button wire:click='imprimer 'type="button" class="btn btn-outline-secondary btn-sm" >
+        <i class="fas fa-print me-1"></i> Imprimer
+      </button>
       <input type="text" wire:model.live="search" class="form-control form-control-sm w-auto"
         placeholder="Recherche rapide..." style="min-width:200px;">
     </div>
@@ -89,3 +92,19 @@
     @endif
   </div>
 </div>
+@script()
+<script>
+  $(document).ready(function(){
+    window.addEventListener('openEtatWindow', event => {
+      // Access the URL from the event detail
+      const url = event.detail.url;
+      if (url) {
+        window.open(url, '_blank');
+      } else {
+        // Fallback or error handling if URL is not provided, though it should be
+        console.error('PDF URL not provided in event detail.');
+      }
+    });
+  })
+</script>
+@endscript

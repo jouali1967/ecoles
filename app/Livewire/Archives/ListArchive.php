@@ -91,4 +91,13 @@ class ListArchive extends Component
       'showResults' => $this->showResults
     ]);
   }
+  public function imprimer(){
+      $params = route('archives.filter.pdf', [
+      'annee_scol' => $this->annee_scolaire ,
+      'sup_a'=>$this->sup_a ?? '',
+      'inf_a'=>$this->inf_a ?? ''
+    ]);
+    $this->dispatch('openEtatWindow', url: $params);
+
+  } 
 }

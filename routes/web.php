@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArchiveFilterController;
 use App\Http\Controllers\EtudiantPdf;
 use App\Http\Controllers\FilterScoreController;
 use App\Http\Controllers\ListBenifController;
@@ -90,4 +91,6 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/archives', ListArchive::class)->name('archives.index.etudiants');
   Route::get('/archives/create', CreateArchive::class)->name('archives.create.etudiants');
   Route::get('/archives/edit/{etudiant_id}/{annee_scol}', \App\Livewire\Archives\EditArchive::class)->name('archives.edit');
+  Route::get('/archives/filter/pdf', [ArchiveFilterController::class, 'generate'])->name('archives.filter.pdf');
+
 });
