@@ -5,6 +5,8 @@ use App\Http\Controllers\FilterScoreController;
 use App\Http\Controllers\ListBenifController;
 use App\Http\Controllers\ListTeritController;
 use App\Http\Controllers\ScoreEtudiantPdf;
+use App\Livewire\Archives\CreateArchive;
+use App\Livewire\Archives\ListArchive;
 use App\Livewire\Editions\EtatEtudiant;
 use App\Livewire\Editions\ListBenif;
 use App\Livewire\Editions\ListTeritoriale;
@@ -38,51 +40,54 @@ Route::get('/', function () {
 });
 Auth::routes();
 Route::middleware(['auth'])->group(function () {
-  Route::get('/',Dashboard::class)->name('admin');
-    // Routes pour les classes
-    Route::get('/classes', MajClasses::class)->name('classes.maj');
-    Route::get('/classes/index', ListClasse::class)->name('classes.index');
-    Route::get('/classes/create', CreateClasse::class)->name('classes.create');
-    // Routes pour les matières
-       Route::get('/matieres', MajMatieres::class)->name('matieres.maj');
-       Route::get('/matieres/index', ListMatiere::class)->name('matieres.index');
-       Route::get('/matieres/create', CreateMatiere::class)->name('matieres.create');
-   
-    // Routes pour les classes-matieres
-    Route::get('/classes-matieres', ListClasseMatiere::class)->name('classes-matieres.index');
-    Route::get('/classes-matieres/create', CreateClasseMatiere::class)->name('classes-matieres.create');
-    Route::get('/classes-matieres/{classeMatiere}/edit', MajClassesMatieres::class)->name('classes-matieres.edit');
-      // Routes pour les étudiants
-      Route::get('/etudiants', ListEtudiant::class)->name('etudiants.index');
-      Route::get('/etudiants/create', CreateEtudiant::class)->name('etudiants.create');
-      Route::get('/etudiants/{etudiant}/edit', EditEtudiant::class)->name('etudiants.edit');
-      // Routes pour les notes
-      //Route::get('/notes/create', CreateNote::class)->name('notes.create');
-     Route::get('/notes', ListNote::class)->name('notes.index');
-      //Route::get('/notes{note}/edit', EditNote::class)->name('notes.edit');
-      Route::get('/notes/saisie', SaisieNote::class)->name('notes.saisie');
-      // Route pour le suivi des notes
-      Route::get('notes/suivi-notes', SuiviNote::class)->name('notes.suivi-notes');
-      // Route pour lien parental
-      /*Route::get('/parents', ListParent::class)->name('parents.index');
+  Route::get('/', Dashboard::class)->name('admin');
+  // Routes pour les classes
+  Route::get('/classes', MajClasses::class)->name('classes.maj');
+  Route::get('/classes/index', ListClasse::class)->name('classes.index');
+  Route::get('/classes/create', CreateClasse::class)->name('classes.create');
+  // Routes pour les matières
+  Route::get('/matieres', MajMatieres::class)->name('matieres.maj');
+  Route::get('/matieres/index', ListMatiere::class)->name('matieres.index');
+  Route::get('/matieres/create', CreateMatiere::class)->name('matieres.create');
+
+  // Routes pour les classes-matieres
+  Route::get('/classes-matieres', ListClasseMatiere::class)->name('classes-matieres.index');
+  Route::get('/classes-matieres/create', CreateClasseMatiere::class)->name('classes-matieres.create');
+  Route::get('/classes-matieres/{classeMatiere}/edit', MajClassesMatieres::class)->name('classes-matieres.edit');
+  // Routes pour les étudiants
+  Route::get('/etudiants', ListEtudiant::class)->name('etudiants.index');
+  Route::get('/etudiants/create', CreateEtudiant::class)->name('etudiants.create');
+  Route::get('/etudiants/{etudiant}/edit', EditEtudiant::class)->name('etudiants.edit');
+  // Routes pour les notes
+  //Route::get('/notes/create', CreateNote::class)->name('notes.create');
+  Route::get('/notes', ListNote::class)->name('notes.index');
+  //Route::get('/notes{note}/edit', EditNote::class)->name('notes.edit');
+  Route::get('/notes/saisie', SaisieNote::class)->name('notes.saisie');
+  // Route pour le suivi des notes
+  Route::get('notes/suivi-notes', SuiviNote::class)->name('notes.suivi-notes');
+  // Route pour lien parental
+  /*Route::get('/parents', ListParent::class)->name('parents.index');
       Route::get('/parents/create', CreateParent::class)->name('parents.create');
       Route::get('/parents/{id}/edit', EditParent::class)->name('parents.edit');*/
-      
-      //inscriptions
-      Route::get('/inscriptions/create', CreateInscription::class)->name('etudiants.create.insc');
-      //editions
-      Route::get('/editions/etudiants', EtatEtudiant::class)->name('editions.etat.etudiant');
-      Route::get('/editions/etudiants/pdf', [EtudiantPdf::class, 'generate'])->name('editions.etat_etud.pdf');
-      Route::get('/editions/score', ScoreEtudiants::class)->name('editions.score.etudiants');
-      Route::get('/editions/score/pdf', [ScoreEtudiantPdf::class,'generate'])->name('editions.score.pdf');
-      
-      Route::get('/editions/filter/pdf', [FilterScoreController::class,'generate'])->name('editions.filter.pdf');
-      Route::get('/editions/filter', ScoreFilter::class)->name('editions.filter.etudiants');
-      
-      Route::get('/editions/listbenif', ListBenif::class)->name('editions.listbenif.etudiants');
-      Route::get('/editions/listbenif/pdf', [ListBenifController::class,'generate'])->name('editions.listbenif.pdf');
 
-      Route::get('/editions/listterit', ListTeritoriale::class)->name('editions.listterit.etudiants');
-      Route::get('/editions/listterir/pdf', [ListTeritController::class,'generate'])->name('editions.listterit.pdf');
+  //inscriptions
+  Route::get('/inscriptions/create', CreateInscription::class)->name('etudiants.create.insc');
+  //editions
+  Route::get('/editions/etudiants', EtatEtudiant::class)->name('editions.etat.etudiant');
+  Route::get('/editions/etudiants/pdf', [EtudiantPdf::class, 'generate'])->name('editions.etat_etud.pdf');
+  Route::get('/editions/score', ScoreEtudiants::class)->name('editions.score.etudiants');
+  Route::get('/editions/score/pdf', [ScoreEtudiantPdf::class, 'generate'])->name('editions.score.pdf');
 
+  Route::get('/editions/filter/pdf', [FilterScoreController::class, 'generate'])->name('editions.filter.pdf');
+  Route::get('/editions/filter', ScoreFilter::class)->name('editions.filter.etudiants');
+
+  Route::get('/editions/listbenif', ListBenif::class)->name('editions.listbenif.etudiants');
+  Route::get('/editions/listbenif/pdf', [ListBenifController::class, 'generate'])->name('editions.listbenif.pdf');
+
+  Route::get('/editions/listterit', ListTeritoriale::class)->name('editions.listterit.etudiants');
+  Route::get('/editions/listterir/pdf', [ListTeritController::class, 'generate'])->name('editions.listterit.pdf');
+
+  Route::get('/archives', ListArchive::class)->name('archives.index.etudiants');
+  Route::get('/archives/create', CreateArchive::class)->name('archives.create.etudiants');
+  Route::get('/archives/edit/{etudiant_id}/{annee_scol}', \App\Livewire\Archives\EditArchive::class)->name('archives.edit');
 });

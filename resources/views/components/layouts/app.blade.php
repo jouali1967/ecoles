@@ -252,6 +252,33 @@
             </ul>
 
           </li>
+          {{-- --}}
+          <li class="nav-item {{ request()->routeIs('archives.*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ request()->routeIs('archives.*') ? 'active' : '' }}">
+              <i class="nav-icon bi bi-box-seam-fill"></i>
+              <p>
+                Resultats Scolaires
+                <i class="nav-arrow bi bi-chevron-right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('archives.create.etudiants') }}"
+                  class="nav-link {{ request()->routeIs('archives.create.etudiants') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Ajouter Moyenne</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('archives.index.etudiants') }}"
+                  class="nav-link {{ request()->routeIs('archives.index.etudiants') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Liste Moyenne</p>
+                </a>
+              </li>
+            </ul>
+
+          </li>
 
           {{-- <li class="nav-item {{ request()->routeIs('parents.*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link {{ request()->routeIs('parents.*') ? 'active' : '' }}">
