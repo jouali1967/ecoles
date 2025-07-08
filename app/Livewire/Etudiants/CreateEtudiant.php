@@ -85,6 +85,9 @@ class CreateEtudiant extends Component
   #[Rule('required', message: 'Année Scolaire obligatoire')]
   public $annee_scol;
 
+  #[Rule('required', message: 'Champ orphelin obligatoire')]
+  public $orphelin = 'non';
+
   public function mount()
   {
     $annee = date('Y');

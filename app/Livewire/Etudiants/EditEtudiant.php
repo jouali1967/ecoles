@@ -60,7 +60,7 @@ class EditEtudiant extends Component
   #[Rule('nullable')]
   #[Rule('regex:/^[\x{0600}-\x{06FF} ]+$/u', message: 'Nom doit etre en arabe')]
   public $dom_ter;
-  #[Rule('required',message:'الوضع الاجتماعي ضروري')]
+  #[Rule('required', message: 'الوضع الاجتماعي ضروري')]
   #[Rule('regex:/^[\x{0600}-\x{06FF} ]+$/u', message: 'Nom doit etre en arabe')]
   public $sit_soc;
   #[Rule('required', message: 'Sexe est obligatoire')]
@@ -87,6 +87,8 @@ class EditEtudiant extends Component
   public $etudiant;
   public $etud_photo;
   public $etud_photo_db;
+  #[Rule('required', message: 'Champ orphelin obligatoire')]
+  public $orphelin = 'non';
 
   public function mount(Etudiant $etudiant)
   {
@@ -118,6 +120,7 @@ class EditEtudiant extends Component
     $this->ben_part = $etudiant->ben_part;
     $this->mont_part = $etudiant->mont_part;
     $this->etud_photo_db = $this->etudiant->etud_photo;
+    $this->orphelin = $this->etudiant->orphelin ?? 'non';
     // Récupérer l'inscription active de l'étudiant
     // $inscription = $etudiant->inscriptions()->latest()->first();
     // $this->classe_id = $inscription ? $inscription->classe_id : null;

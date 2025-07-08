@@ -351,14 +351,14 @@
               @enderror
             </div>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-3">
             <div class="form-group">
               <label for="sit_soc" class="form-label text-end w-100">الوضعيةالاجتماعية</label>
               <div class="input-group">
                 <span class="input-group-text bg-light">
                   <i class="fas fa-user"></i>
                 </span>
-                  <select wire:model.live='sit_soc' class='form-select @error("sit_soc") is-invalid @enderror' dir="rtl"
+                <select wire:model.live='sit_soc' class='form-select @error("sit_soc") is-invalid @enderror' dir="rtl"
                   lang="ar">
                   <option value="">اختر الوضع الاجتماعي</option>
                   <option value="فقر">فقر</option>
@@ -394,7 +394,7 @@
               @enderror
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
             <div class="form-group">
               <label for="niv_scol" class="form-label text-end w-100">اسم المؤسسة</label>
               <div class="input-group">
@@ -414,6 +414,30 @@
               @enderror
             </div>
           </div>
+          <div class="col-md-3 d-flex align-items-end">
+            <div class="w-100 border rounded p-0" style="background:#f8f9fa;">
+              <label for="orphelin" class="form-label text-primary text-end w-100 mb-1" style="text-align:right;">يتيم
+                ام لا ؟</label>
+              <div class="d-flex align-items-center justify-content-center gap-3" style="min-height:38px;">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="orphelin" id="orphelin_oui" value="oui"
+                    wire:model.live="orphelin">
+                  <label class="form-check-label" for="orphelin_oui">نعم</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="orphelin" id="orphelin_non" value="non"
+                    wire:model.live="orphelin">
+                  <label class="form-check-label" for="orphelin_non">لا</label>
+                </div>
+              </div>
+              @error('orphelin')
+              <div class="text-danger mt-1 text-center">
+                {{ $message }}
+              </div>
+              @enderror
+            </div>
+          </div>
+
           <div class="col-md-3">
             <div class="form-group">
               <label for="date_insc" class="form-label text-end w-100">تاريخ التحاقه بالمؤسسة</label>

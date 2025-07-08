@@ -41,7 +41,7 @@ class Etudiant extends Model
     'date_insc',
     'date_sortie',
     'ben_part',
-    'mont_part'
+    'mont_part','orphelin'
   ];
 
   protected $casts = [
