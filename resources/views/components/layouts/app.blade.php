@@ -256,6 +256,13 @@
                   <p>Etudiants Handicapés</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('editions.orphelin.etudiants') }}"
+                  class="nav-link {{ request()->routeIs('editions.orphelin.etudiants') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Etudiants Orphelins</p>
+                </a>
+              </li>
             </ul>
 
           </li>
