@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArchiveFilterController;
 use App\Http\Controllers\EtudiantPdf;
 use App\Http\Controllers\FilterScoreController;
+use App\Http\Controllers\HandicapPdfController;
 use App\Http\Controllers\ListBenifController;
 use App\Http\Controllers\ListTeritController;
 use App\Http\Controllers\ScoreEtudiantPdf;
@@ -10,6 +11,7 @@ use App\Livewire\Archives\CreateArchive;
 use App\Livewire\Archives\ListArchive;
 use App\Livewire\Editions\EtatEtudiant;
 use App\Livewire\Editions\ListBenif;
+use App\Livewire\Editions\ListHandicap;
 use App\Livewire\Editions\ListTeritoriale;
 use App\Livewire\Editions\ScoreEtudiants;
 use App\Livewire\Editions\ScoreFilter;
@@ -87,6 +89,9 @@ Route::middleware(['auth'])->group(function () {
 
   Route::get('/editions/listterit', ListTeritoriale::class)->name('editions.listterit.etudiants');
   Route::get('/editions/listterir/pdf', [ListTeritController::class, 'generate'])->name('editions.listterit.pdf');
+
+  Route::get('/editions/handicap', ListHandicap::class)->name('editions.listhandicap.etudiants');
+  Route::get('/editions/handicap/pdf', [HandicapPdfController::class, 'generate'])->name('editions.handicap.pdf');
 
   Route::get('/archives', ListArchive::class)->name('archives.index.etudiants');
   Route::get('/archives/create', CreateArchive::class)->name('archives.create.etudiants');

@@ -31,7 +31,7 @@ class ListTeritController extends Controller
     $pdf = new TeritPdf($dom_ter);
     $pdf->AddPage();
     $pdf->SetY(24);
-      $compteur = 1;
+    $compteur = 1;
     $count_etud = count($etudiants);
     foreach ($etudiants as $etudiant) {
       $pdf->SetX(8);

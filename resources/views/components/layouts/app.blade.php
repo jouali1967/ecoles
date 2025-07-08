@@ -249,6 +249,13 @@
                   <p>Etudiants par Dom.teri</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('editions.listhandicap.etudiants') }}"
+                  class="nav-link {{ request()->routeIs('editions.listhandicap.etudiants') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Etudiants Handicapés</p>
+                </a>
+              </li>
             </ul>
 
           </li>
