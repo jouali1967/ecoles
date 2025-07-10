@@ -87,6 +87,10 @@ class CreateEtudiant extends Component
 
   #[Rule('required', message: 'Champ orphelin obligatoire')]
   public $orphelin = 'non';
+  #[Rule('nullable')]
+  public $type_handicap;
+  #[Rule('nullable')]
+  public $type_orphelin;
 
   public function mount()
   {

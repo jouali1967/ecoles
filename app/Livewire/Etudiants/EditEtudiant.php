@@ -89,6 +89,11 @@ class EditEtudiant extends Component
   public $etud_photo_db;
   #[Rule('required', message: 'Champ orphelin obligatoire')]
   public $orphelin = 'non';
+  #[Rule('nullable')]
+  public $type_handicap;
+  #[Rule('nullable')]
+  public $type_orphelin;
+
 
   public function mount(Etudiant $etudiant)
   {
@@ -121,6 +126,8 @@ class EditEtudiant extends Component
     $this->mont_part = $etudiant->mont_part;
     $this->etud_photo_db = $this->etudiant->etud_photo;
     $this->orphelin = $this->etudiant->orphelin ?? 'non';
+    $this->type_orphelin = $this->etudiant->type_orphelin ?? '';
+    $this->type_handicap = $this->etudiant->type_handicap ?? '';
     // Récupérer l'inscription active de l'étudiant
     // $inscription = $etudiant->inscriptions()->latest()->first();
     // $this->classe_id = $inscription ? $inscription->classe_id : null;
@@ -137,6 +144,7 @@ class EditEtudiant extends Component
   public function save()
   {
     $validatedData = $this->validate();
+    //dd($validatedData);
     // Gestion de la photo : nouvelle ou ancienne
     if ($this->etud_photo) {
       // S'assurer que le dossier uploads existe

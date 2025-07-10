@@ -10,7 +10,6 @@
         </a>
       </div>
     </div>
-
     <div class="card-body">
       <form wire:submit='save'>
         <div class="row g-1">
@@ -87,7 +86,6 @@
               @enderror
             </div>
           </div>
-
           <div class="col-md-6">
             <div class="form-group">
               <label for="nom_ar" class="form-label text-end w-100">النسب</label>
@@ -118,7 +116,6 @@
               @enderror
             </div>
           </div>
-
           <div class="col-md-6">
             <div class="form-group">
               <label for="prenom_ar" class="form-label text-end w-100" style="text-align: right;">الاسم</label>
@@ -288,7 +285,7 @@
             </div>
           </div>
           <div class="col-md-3 d-flex align-items-end">
-            <div class="w-100 border rounded p-0" style="background:#f8f9fa;">
+            <div class="w-100 border rounded p-0 h-100" style="background:#f8f9fa; min-height:100%;">
               <label for="sexe" class="form-label text-primary text-end w-100 mb-1"
                 style="text-align:right;">الجنس</label>
               <div class="d-flex align-items-center justify-content-center gap-3" style="min-height:38px;">
@@ -346,7 +343,7 @@
               @enderror
             </div>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-6">
             <div class="form-group">
               <label for="sit_soc" class="form-label text-end w-100">الوضعيةالاجتماعية</label>
               <div class="input-group">
@@ -366,8 +363,30 @@
               @enderror
             </div>
           </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="niv_scol" class="form-label text-end w-100">اسم المؤسسة</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light">
+                  <i class="fas fa-user"></i>
+                </span>
+                <select wire:model.live='niv_scol' class='form-select @error("niv_scol") is-invalid @enderror' dir="rtl"
+                  lang="ar">
+                  <option value="">اختراسم المؤسسة</option>
+                  <option value="IMAM MOUSLIM">IMAM MOUSLIM</option>
+                  <option value="LYCEE CHAOUKI">LYCEE CHAOUKI</option>
+                  <option value="LYCEE MOULAY ABDELLAH">LYCEE MOULAY ABDELLAH</option>
+                </select>
+              </div>
+              @error('niv_scol')
+              <div class="invalid-feedback d-block">{{ $message }}</div>
+              @enderror
+            </div>
+          </div>
+
           <div class="col-md-3 d-flex align-items-end">
-            <div class="w-100 border rounded p-0" style="background:#f8f9fa;">
+            <div class="w-100 border rounded p-0 h-100 d-flex flex-column justify-content-center align-items-stretch"
+              style="background:#f8f9fa; min-height:70px;">
               <label for="sexe" class="form-label text-primary text-end w-100 mb-1" style="text-align:right;">في وضعية
                 اعاقة؟</label>
               <div class="d-flex align-items-center justify-content-center gap-3" style="min-height:38px;">
@@ -389,29 +408,23 @@
               @enderror
             </div>
           </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label for="niv_scol" class="form-label text-end w-100">اسم المؤسسة</label>
-              <div class="input-group">
-                <span class="input-group-text bg-light">
-                  <i class="fas fa-user"></i>
-                </span>
-                <select wire:model.live='niv_scol' class='form-select @error("niv_scol") is-invalid @enderror' dir="rtl"
-                  lang="ar">
-                  <option value="">اختراسم المؤسسة</option>
-                  <option value="IMAM MOUSLIM">IMAM MOUSLIM</option>
-                  <option value="LYCEE CHAOUKI">LYCEE CHAOUKI</option>
-                  <option value="LYCEE MOULAY ABDELLAH">LYCEE MOULAY ABDELLAH</option>
-                </select>
-              </div>
-              @error('niv_scol')
-              <div class="invalid-feedback d-block">{{ $message }}</div>
+          {{-- Type de handicap --}}
+          <div class="col-md-3 d-flex align-items-end">
+            <div class="w-100 border rounded p-2 h-100 d-flex flex-column justify-content-center align-items-stretch"
+              style="background:#f8f9fa; min-width:0; min-height:70px; {{ $handicap === 'oui' ? '' : 'visibility:hidden;' }}">
+              <label class="form-label text-primary w-100 mb-1 text-end" style="text-align:right;">نوع الإعاقة :</label>
+              <input type="text" class="form-control" wire:model.live="type_handicap" dir="rtl" lang="ar" {{ $handicap==='oui' ? '' : 'disabled' }}>
+              @error('type_handicap')
+              <div class="text-danger mt-1 text-center">{{ $message }}</div>
               @enderror
             </div>
           </div>
+
           <div class="col-md-3 d-flex align-items-end">
-            <div class="w-100 border rounded p-0" style="background:#f8f9fa;">
-              <label for="orphelin" class="form-label text-primary text-end w-100 mb-1" style="text-align:right;">يتيم ام لا ؟</label>
+            <div class="w-100 border rounded p-0 h-100 d-flex flex-column justify-content-center align-items-stretch"
+              style="background:#f8f9fa; min-height:70px;">
+              <label for="orphelin" class="form-label text-primary text-end w-100 mb-1" style="text-align:right;">يتيم
+                ام لا ؟</label>
               <div class="d-flex align-items-center justify-content-center gap-3" style="min-height:38px;">
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="orphelin" id="orphelin_oui" value="oui"
@@ -431,7 +444,17 @@
               @enderror
             </div>
           </div>
-
+          {{-- Type d’orphelin --}}
+          <div class="col-md-3 d-flex align-items-end">
+            <div class="w-100 border rounded p-2 h-100 d-flex flex-column justify-content-center align-items-stretch"
+              style="background:#f8f9fa; min-width:0; min-height:70px; {{ $orphelin === 'oui' ? '' : 'visibility:hidden;' }}">
+              <label class="form-label text-primary w-100 mb-1 text-end" style="text-align:right;">نوع اليتم:</label>
+              <input type="text" class="form-control" wire:model.live="type_orphelin" dir="rtl" lang="ar" {{ $orphelin==='oui' ? '' : 'disabled' }}>
+              @error('type_orphelin')
+              <div class="text-danger mt-1 text-center">{{ $message }}</div>
+              @enderror
+            </div>
+          </div>
           <div class="col-md-3">
             <div class="form-group">
               <label for="date_insc" class="form-label text-end w-100">تاريخ التحاقه بالمؤسسة</label>
