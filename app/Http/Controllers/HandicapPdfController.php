@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Etudiant;
 use App\Pdf\HandicapPdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,7 +11,7 @@ class HandicapPdfController extends Controller
 {
   public function generate(Request $request)
   {
-    $latestInscriptions = DB::table('inscriptions')
+    /*$latestInscriptions = DB::table('inscriptions')
       ->select('etudiant_id', DB::raw('MAX(annee_scol) as max_annee'))
       ->groupBy('etudiant_id');
 
@@ -37,7 +38,10 @@ class HandicapPdfController extends Controller
         'classes.abr_classe'
       )
       ->orderBy('etudiants.nom_ar')
-      ->get();
+      ->get();*/
+    $etudiants = Etudiant::with('lastInscription.classe')
+                  ->where('etudiants.handicap', 'oui')
+    ->get();
     $pdf = new HandicapPdf();
     $pdf->AddPage();
     $pdf->SetY(24);
@@ -49,7 +53,7 @@ class HandicapPdfController extends Controller
       // Données
       $pdf->Cell(80, 6, $etudiant->nom_ar . ' ' . $etudiant->prenom_ar, 1, 0, 'R', false); // Aligné à droite
       $pdf->Cell(40, 6, $etudiant->abr_classe, 1, 0, 'R', false);
-      $pdf->Cell(40, 6, '', 1, 1, 'R', false);
+      $pdf->Cell(40, 6, $etudiant->type_handicap, 1, 1, 'R', false);
       $compteur++;
       $count_etud = $count_etud - 1;
       // if ($pdf->GetY() + 45 > ($pdf->getPageHeight() - $pdf->getFooterMargin()) and $count_etud < 5) {

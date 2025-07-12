@@ -3,6 +3,7 @@
 namespace App\Livewire\Editions;
 
 use Livewire\Component;
+use App\Models\Etudiant;
 use App\Models\Inscription;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +40,13 @@ class ListBenif extends Component
     $etudiants = collect();
     if ($this->showResults) {
       $annee_scol = $this->annee_scolaire;
-      $etudiants = DB::table('etudiants')
+      $etudiants = Etudiant::with('inscriptions.classe')
+      ->where('etudiants.ben_part', 'oui') // filtre local sur l'étudiant
+      ->whereHas('inscriptions', function ($query) use($annee_scol) {
+          $query->where('annee_scol', $annee_scol);
+      })
+    ->paginate(5);
+      /*$etudiants = DB::table('etudiants')
     ->join('inscriptions', 'etudiants.id', '=', 'inscriptions.etudiant_id')
     ->leftJoin('classes', 'inscriptions.classe_id', '=', 'classes.id')
     ->where('etudiants.ben_part', 'oui') // boursiers
@@ -57,7 +64,7 @@ class ListBenif extends Component
         'classes.abr_classe',
     )
     ->orderBy('etudiants.nom_ar')
-    ->paginate(5);
+    ->paginate(5);*/
     }
 
       return view('livewire.editions.list-benif',compact('etudiants'));

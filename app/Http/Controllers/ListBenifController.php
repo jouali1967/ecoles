@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Pdf\BenifPdf;
+use App\Models\Etudiant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -10,7 +11,7 @@ class ListBenifController extends Controller
 {
    public function generate(Request $request){
     $annee_scol = $request->input('annee_scol');
-    $etudiants = DB::table('etudiants')
+    /*$etudiants = DB::table('etudiants')
     ->join('inscriptions', 'etudiants.id', '=', 'inscriptions.etudiant_id')
     ->leftJoin('classes', 'inscriptions.classe_id', '=', 'classes.id')
     ->where('etudiants.ben_part', 'oui') // boursiers
@@ -28,7 +29,14 @@ class ListBenifController extends Controller
         'classes.abr_classe',
     )
     ->orderBy('etudiants.nom_ar')
+    ->get();*/
+    $etudiants = Etudiant::with('inscriptions.classe')
+      ->where('etudiants.ben_part', 'oui') // filtre local sur l'étudiant
+      ->whereHas('inscriptions', function ($query) use($annee_scol) {
+          $query->where('annee_scol', $annee_scol);
+    })
     ->get();
+
     $pdf = new BenifPdf($annee_scol);
     $pdf->AddPage();
     $pdf->SetY(24);
@@ -40,7 +48,7 @@ class ListBenifController extends Controller
       // Données
       $pdf->Cell(25, 6, $etudiant->code_massar, 1, 0, 'R', false);
       $pdf->Cell(80, 6, $etudiant->nom_ar . ' ' . $etudiant->prenom_ar, 1, 0, 'R', false); // Aligné à droite
-      $pdf->Cell(40, 6, $etudiant->abr_classe, 1, 0, 'R', false);
+      $pdf->Cell(40, 6, $etudiant->inscriptions->first()->classe?->abr_classe, 1, 0, 'R', false);
       $pdf->Cell(40, 6, $etudiant->tel_pere ?? $etudiant->tel_mere ?? '', 1, 1, 'R', false);
       $compteur++;
       $count_etud = $count_etud - 1;
