@@ -10,6 +10,11 @@
     </div>
   </div>
   <div class="card-body">
+    @if (session()->has('error'))
+    <div class="alert alert-danger text-center">
+      {{ session('error') }}
+    </div>
+    @endif
     <form wire:submit="save">
       <!-- Recherche d'étudiant -->
       <div class="row g-1">
@@ -61,7 +66,7 @@
                   @if($etudiant->inscriptions->isNotEmpty() && $etudiant->inscriptions->first()->classe)
                   <span class="badge bg-info">
                     <i class="fas fa-chalkboard me-1"></i>
-                    {{ $etudiant->inscriptions->first()->classe->nom_classe }}
+                    {{ $etudiant->lastInscription->classe->nom_classe }}
                   </span>
                   @endif
                 </button>

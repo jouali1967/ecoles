@@ -31,16 +31,14 @@ class CreateInscription extends Component
   public function updatedSearchEtudiant()
   {
     if (strlen($this->searchEtudiant) >= 2) {
-      $this->etudiants = Etudiant::with(['inscriptions.classe'])
-        ->whereNotIn('id', function ($query) {
-          $query->select('etudiant_id')
-            ->from('parentals');
-        })
+      $this->etudiants = Etudiant::with(['lastInscription.classe'])
         ->where(function ($query) {
           $query->where('nom', 'like', '%' . $this->searchEtudiant . '%')
+            ->orWhere('code_massar', 'like', '%' . $this->searchEtudiant . '%')
             ->orWhere('prenom', 'like', '%' . $this->searchEtudiant . '%');
         })
         ->get();
+      //dd($this->etudiants);
     } else {
       $this->etudiants = collect();
     }
@@ -55,6 +53,15 @@ class CreateInscription extends Component
   public function save()
   {
     $data = $this->validate();
+    // Vérifier si l'inscription existe déjà
+    $exists = Inscription::where('etudiant_id', $data['etudiant_id'])
+      ->where('annee_scol', $data['annee_scol'])
+      ->where('classe_id', $data['classe_id'])
+      ->exists();
+    if ($exists) {
+      session()->flash('error', 'Cette inscription existe déjà pour cet étudiant, cette année et cette classe.');
+      return;
+    }
     Inscription::create($data);
     // Réinitialiser les champs pour permettre une nouvelle inscription
     $this->reset(['etudiant_id', 'selectedEtudiant', 'classe_id']);
