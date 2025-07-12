@@ -77,7 +77,7 @@
               <td>{{ $etudiant->code_massar }}</td>
               <td class="text-end">{{ $etudiant->nom_ar }}</td>
               <td class="text-end">{{ $etudiant->prenom_ar }}</td>
-              <td class="text-end">{{ $etudiant->abr_classe }}</td>
+              <td class="text-end">{{ $etudiant->lastInscription->classe->abr_classe }}</td>
               <td class="text-end">{{ $etudiant->tel_pere ?? $etudiant->tel_mere ?? '' }} </td>
 
             </tr>

@@ -3,6 +3,7 @@
 namespace App\Livewire\Editions;
 
 use Livewire\Component;
+use App\Models\Etudiant;
 use App\Models\Inscription;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +30,7 @@ class ListTeritoriale extends Component
   {
     $etudiants = collect();
     if ($this->showResults) {
-      $latestInscriptions = DB::table('inscriptions')
+      /*$latestInscriptions = DB::table('inscriptions')
         ->select('etudiant_id', DB::raw('MAX(annee_scol) as max_annee'))
         ->groupBy('etudiant_id');
       $etudiants = DB::table('etudiants')
@@ -54,8 +55,10 @@ class ListTeritoriale extends Component
           'classes.nom_classe',
           'classes.abr_classe'
         )
-        ->orderBy('etudiants.nom_ar')
-        ->paginate(5);
+        ->orderBy('etudiants.nom_ar')*/
+      $etudiants = Etudiant::with('lastInscription.classe')
+                  ->where('etudiants.dom_ter', $this->dom_ter)
+      ->paginate(5);
     }
 
     return view('livewire.editions.list-teritoriale', compact('etudiants'));

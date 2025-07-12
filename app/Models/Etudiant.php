@@ -82,8 +82,8 @@ class Etudiant extends Model
    */
   public function lastInscription()
   {
-    //return $this->hasOne(Inscription::class)->latestOfMany();
-    return $this->hasOne(Inscription::class)->orderBy('annee_scol', 'desc');;
+    return $this->hasOne(Inscription::class)->latestOfMany();
+    //return $this->hasOne(Inscription::class)->orderBy('annee_scol', 'desc');;
   }
   /**
    * Dernière inscription de l'étudiant pour une année donnée
