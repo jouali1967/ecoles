@@ -40,7 +40,7 @@ class OrphelinPdf extends TCPDF
       $this->SetFont('aealarabiya', 'B', 9);
       $this->MultiCell(80, 6, "الاسم والنسب", 1, 'C', 0, 0, null, null, true, 0, false, true, 6, 'M');
       $this->MultiCell(40, 6, "المستوى الدراسي", 1, 'C', 0, 0, null, null, true, 0, false, true, 6, 'M');
-      $this->MultiCell(40, 6, "نوع الاعاقة", 1, 'C', 0, 0, null, null, true, 0, false, true, 6, 'M');
+      $this->MultiCell(40, 6, "نوع اليتم", 1, 'C', 0, 0, null, null, true, 0, false, true, 6, 'M');
     }
   }
 

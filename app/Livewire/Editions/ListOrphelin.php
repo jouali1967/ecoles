@@ -3,13 +3,14 @@
 namespace App\Livewire\Editions;
 
 use Livewire\Component;
+use App\Models\Etudiant;
 use Illuminate\Support\Facades\DB;
 
 class ListOrphelin extends Component
 {
     public function render()
     {
-      $latestInscriptions = DB::table('inscriptions')
+     /* $latestInscriptions = DB::table('inscriptions')
       ->select('etudiant_id', DB::raw('MAX(annee_scol) as max_annee'))
       ->groupBy('etudiant_id');
 
@@ -36,7 +37,10 @@ class ListOrphelin extends Component
         'classes.abr_classe'
       )
       ->orderBy('etudiants.nom_ar')
-      ->paginate(5);
+      ->paginate(5);*/
+    $etudiants = Etudiant::with('lastInscription.classe')
+                  ->where('etudiants.orphelin', 'oui')
+    ->paginate(5);
 
       return view('livewire.editions.list-orphelin',compact('etudiants'));
     }
