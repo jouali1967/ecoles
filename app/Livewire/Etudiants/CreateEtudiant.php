@@ -39,7 +39,7 @@ class CreateEtudiant extends Component
   #[Rule('nullable')]
   public $num_acte_nais;
   #[Rule('nullable')]
-  #[Rule('regex:/^[\x{0600}-\x{06FF} ]+$/u', message: 'Nom doit etre en arabe')]
+  //#[Rule('regex:/^[\x{0600}-\x{06FF} ]+$/u', message: 'Nom doit etre en arabe')]
   public $nom_pere;
   #[Rule('nullable')]
   public $tel_pere;
