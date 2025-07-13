@@ -5,29 +5,11 @@ namespace App\Livewire\Notes;
 use App\Models\Note;
 use Livewire\Component;
 use App\Models\Etudiant;
-use App\Models\Inscription;
 use App\Models\ClassesMatiere;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 class SaisieNote extends Component
 {
-  public function mount()
-  {
-    // Déterminer automatiquement le semestre selon la date
-    /*$mois = date('n');
-    if ($mois >= 2 && $mois <= 8) {
-      $this->semestre = 2;
-    } else {
-      $this->semestre = 1;
-    }*/
-    // Récupérer les années scolaires distinctes depuis la table inscriptions
-    $this->annees_scolaires = Inscription::select('annee_scol')
-      ->distinct()
-      ->orderBy('annee_scol', 'desc')
-      ->pluck('annee_scol')
-      ->toArray();
-  }
   public $searchEtudiant;
   public $etudiant_id;
   public $etudiants;
@@ -39,49 +21,15 @@ class SaisieNote extends Component
   public $notesEtudiant;
   public $notes = [];
   public $semestre;
-  public $annees_scolaires;
-  public function rechercherEtudiant()
-  {
-    // Récupère les notes de l'étudiant pour le semestre et l'année scolaire sélectionnés
-    if ($this->selectedEtudiant && $this->semestre && $this->annee_scol) {
-      $inscription = Inscription::where('etudiant_id', $this->selectedEtudiant->id)
-        ->where('annee_scol', $this->annee_scol)
-        ->with('classe')
-        ->first();
-      if ($inscription && $inscription->classe) {
-        $this->classe_etu = $inscription->classe;
-        $this->matieres = $this->classe_etu->matieres()->withPivot('coefficient')->get();
-      } else {
-        $this->classe_etu = null;
-        $this->matieres = collect();
-      }
-      $notes = Note::where('etudiant_id', $this->selectedEtudiant->id)
-        ->where('semestre', $this->semestre)
-        ->where('annee_scol', $this->annee_scol)
-        ->get();
-      //dd($notes);
-      $this->notesEtudiant = $notes->keyBy('matiere_id');
-    } else {
-      $this->notesEtudiant = collect();
-    }
 
-    foreach ($this->matieres as $matiere) {
-      $noteExistante = $this->notesEtudiant->get($matiere->id);
-      if ($noteExistante) {
-        $this->notes[$matiere->id] = [
-          'controle1' => $noteExistante->note1,
-          'controle2' => $noteExistante->note2,
-          'controle3' => $noteExistante->note3,
-          'controle4' => $noteExistante->note4,
-        ];
-      } else {
-        $this->notes[$matiere->id] = [
-          'controle1' => null,
-          'controle2' => null,
-          'controle3' => null,
-          'controle4' => null,
-        ];
-      }
+  public function mount()
+  {
+    // Déterminer automatiquement le semestre selon la date
+    $mois = date('n');
+    if ($mois >= 2 && $mois <= 8) {
+      $this->semestre = 2;
+    } else {
+      $this->semestre = 1;
     }
   }
 
@@ -90,11 +38,27 @@ class SaisieNote extends Component
     $this->matieres = collect();
     if (strlen($this->searchEtudiant) >= 2) {
       $this->etudiants = Etudiant::with('lastInscription.classe')
+      ->where(function ($query) {
+      $query->where('nom', 'like', '%' . $this->searchEtudiant . '%')
+            ->orWhere('prenom', 'like', '%' . $this->searchEtudiant . '%');
+        })
+        ->get();
+      /*$this->etudiants = Etudiant::with(['inscriptions' => function ($query) {
+        $query->join(DB::raw('(
+                SELECT etudiant_id, MAX(annee_scol) as max_annee
+                FROM inscriptions
+                GROUP BY etudiant_id
+            ) as latest_inscriptions'), function ($join) {
+          $join->on('inscriptions.etudiant_id', '=', 'latest_inscriptions.etudiant_id')
+            ->on('inscriptions.annee_scol', '=', 'latest_inscriptions.max_annee');
+        });
+      }, 'inscriptions.classe'])
         ->where(function ($query) {
           $query->where('nom', 'like', '%' . $this->searchEtudiant . '%')
             ->orWhere('prenom', 'like', '%' . $this->searchEtudiant . '%');
         })
-        ->get();
+        ->limit(10)
+        ->get();*/
     } else {
       $this->etudiants = collect();
     }
@@ -105,10 +69,54 @@ class SaisieNote extends Component
   {
     $this->notes = []; // Réinitialiser les notes pour le nouvel étudiant sélectionné
     $this->etudiant_id = $etudiant;
+   /* $this->selectedEtudiant = Etudiant::with(['inscriptions' => function ($query) {
+      $query->join(DB::raw('(
+                SELECT etudiant_id, MAX(annee_scol) as max_annee
+                FROM inscriptions
+                GROUP BY etudiant_id
+            ) as latest_inscriptions'), function ($join) {
+        $join->on('inscriptions.etudiant_id', '=', 'latest_inscriptions.etudiant_id')
+          ->on('inscriptions.annee_scol', '=', 'latest_inscriptions.max_annee');
+      });
+    }, 'inscriptions.classe'])->find($this->etudiant_id->id);*/
     $this->selectedEtudiant = Etudiant::with(['notes', 'lastInscription.classe'])
-      ->find($this->etudiant_id->id);
-    $this->searchEtudiant = $etudiant->nom . ' ' . $etudiant->prenom;
+                    ->find($this->etudiant_id->id);
+    $this->searchEtudiant = '';
     $this->etudiants = collect();
+    // Vérifier que l'étudiant a des inscriptions avant d'accéder à la classe
+    $inscription = $this->etudiant_id->lastInscription;
+    if ($inscription) {
+      $this->classe_etu = $inscription->classe;
+      $this->annee_scol = $inscription->annee_scol;
+      $this->matieres = $this->classe_etu->matieres()->withPivot('coefficient')->get();
+    } else {
+      $this->classe_etu = null;
+      $this->annee_scol = null;
+      $this->matieres = collect(); // Réinitialiser les matières si pas d'inscription
+    }
+    $this->notesEtudiant = $this->selectedEtudiant->notes ? $this->selectedEtudiant->notes->keyBy('matiere_id') : collect();
+    //dd( $this->notesEtudiant);
+
+    // Pré-remplir les notes pour les champs de saisie
+    foreach ($this->matieres as $matiere) {
+      $noteExistante = $this->notesEtudiant->get($matiere->id);
+      if ($noteExistante) {
+        $this->notes[$matiere->id] = [
+          'controle1' => $noteExistante->note1,
+          'controle2' => $noteExistante->note2,
+          'controle3' => $noteExistante->note3,
+          'controle4' => $noteExistante->note4,
+        ];
+      } else {
+        // Initialiser avec des valeurs null si aucune note n'existe, pour éviter les erreurs de liaison
+        $this->notes[$matiere->id] = [
+          'controle1' => null,
+          'controle2' => null,
+          'controle3' => null,
+          'controle4' => null,
+        ];
+      }
+    }
   }
 
 
@@ -167,7 +175,7 @@ class SaisieNote extends Component
         'note_calc' => $this->calculateNoteCalc(['controle1' => $controle1, 'controle2' => $controle2, 'controle3' => $controle3, 'controle4' => $controle4], $coefficient),
         'semestre' => $this->semestre, // Utilisation automatique du semestre
         'annee_scol' => $this->annee_scol,
-        'coefficient' => $coefficient
+        'coefficient'=>$coefficient
       ];
 
       $existingNote = Note::where('etudiant_id', $this->etudiant_id->id)

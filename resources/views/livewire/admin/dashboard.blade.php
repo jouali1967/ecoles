@@ -1,7 +1,7 @@
 <div class="container-fluid p-0">
   <div class="position-relative">
       <!-- Image de fond -->
-      <img src="{{ asset('assets/images/dashboard.jpg') }}" alt="Dashboard" 
+      <img src="{{ asset('assets/images/dashboard.jpeg') }}" alt="Dashboard" 
            class="w-100" 
            style="height: calc(88vh - 56px); object-fit: cover; filter: brightness(0.85);"
            alt="École avec étudiants">

@@ -30,39 +30,19 @@
             </div>
           </div>
         </div>
-        <div style="width: 150px;">
-          <select class="form-select form-select-sm" wire:model="semestre">
-            <option value="">Choisir Semestre</option>
-            <option value="1">Semestre 1</option>
-            <option value="2">Semestre 2</option>
-          </select>
-        </div>
-        <div style="width: 180px;">
-          <select class="form-select form-select-sm" wire:model="annee_scol">
-            <option value="">Année scolaire</option>
-            @foreach($annees_scolaires as $annee)
-            <option value="{{ $annee }}">{{ $annee }}</option>
-            @endforeach
-          </select>
-        </div>
-        <div>
-          <button type="button" class="btn btn-primary btn-sm" wire:click="rechercherEtudiant">
-            <i class="fas fa-search"></i> Chercher
-          </button>
-        </div>
 
         @if($selectedEtudiant)
         <div class="d-flex align-items-center gap-2 flex-grow-1 bg-light p-2 rounded">
           <i class="fas fa-user-check text-primary"></i>
           <span class="fw-bold">{{ $selectedEtudiant->nom }} {{ $selectedEtudiant->prenom }}</span>
-          @if($selectedEtudiant->lastInscription && $selectedEtudiant->lastInscription->classe)
+          @if($selectedEtudiant->inscriptions->isNotEmpty() && $selectedEtudiant->inscriptions->first()->classe)
           <span class="badge bg-info">
             <i class="fas fa-chalkboard me-1"></i>
-            {{ $selectedEtudiant->lastInscription->classe->nom_classe }}
+            {{ $selectedEtudiant->inscriptions->first()->classe->nom_classe }}
           </span>
           <span class="badge bg-secondary">
             <i class="fas fa-calendar-alt me-1"></i>
-            {{ $selectedEtudiant->lastInscription->annee_scol }}
+            {{ $selectedEtudiant->inscriptions->first()->annee_scol }}
           </span>
           @endif
         </div>
@@ -79,14 +59,14 @@
             <span class="text-muted ms-2">{{ $etudiant->prenom }}</span>
           </div>
           <div class="d-flex gap-2">
-            @if($etudiant->lastInscription && $etudiant->lastInscription->classe)
+            @if($etudiant->inscriptions->isNotEmpty() && $etudiant->inscriptions->first()->classe)
             <span class="badge bg-info">
               <i class="fas fa-chalkboard me-1"></i>
-              {{ $etudiant->lastInscription->classe->nom_classe }}
+              {{ $etudiant->inscriptions->first()->classe->nom_classe }}
             </span>
             <span class="badge bg-secondary">
               <i class="fas fa-calendar-alt me-1"></i>
-              {{ $etudiant->lastInscription->annee_scol }}
+              {{ $etudiant->inscriptions->first()->annee_scol }}
             </span>
             @endif
           </div>
