@@ -85,6 +85,7 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/editions/etudiants/pdf', [EtudiantPdf::class, 'generate'])->name('editions.etat_etud.pdf');
   Route::get('/editions/score', ScoreEtudiants::class)->name('editions.score.etudiants');
   Route::get('/editions/score/pdf', [ScoreEtudiantPdf::class, 'generate'])->name('editions.score.pdf');
+  Route::get('/editions/moyenne/pdf', [ScoreEtudiantPdf::class, 'exporter'])->name('notes.suivietud.pdf');
 
   Route::get('/editions/filter/pdf', [FilterScoreController::class, 'generate'])->name('editions.filter.pdf');
   Route::get('/editions/filter', ScoreFilter::class)->name('editions.filter.etudiants');

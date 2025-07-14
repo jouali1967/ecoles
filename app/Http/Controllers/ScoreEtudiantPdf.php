@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use App\Pdf\ScorePdf;
+use App\Pdf\MoyenneSuiviPdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -81,6 +82,62 @@ class ScoreEtudiantPdf extends Controller
         }
       }
       $pdf->Cell(15, 6, $classe, 1, 0, 'L', false);
+      $pdf->Cell(20, 6, number_format($etudiant->moyenne, 2, ',', ' '), 1, 1, 'C', false);
+      $compteur++;
+      $count_etud = $count_etud - 1;
+      if ($pdf->GetY() + 45 > ($pdf->getPageHeight() - $pdf->getFooterMargin()) and $count_etud < 5) {
+        $pdf->AddPage();
+      }
+    }
+
+
+    // Génération du PDF
+    return $pdf->Output('etat_etudiants_' . date('Y-m-d') . '.pdf', 'I');
+  }
+  public function exporter(Request $request)
+  {
+    $annee_scol = $request->input('annee_scol');
+    $semestre = $request->input('semestre');
+    $matiere_id = $request->input('matiere_id');
+    /*$etudiants = Note::where('annee_scol', $annee_scol)
+      ->where('semestre', $semestre)
+      ->where('matiere_id', $matiere_id)
+      ->with(['etudiant', 'etudiant.inscriptions.classe'])
+      ->select('etudiant_id', DB::raw('AVG(note_calc) as moyenne'))
+      ->groupBy('etudiant_id')
+      ->havingRaw('AVG(note_calc) < 10')
+      ->orderBy('moyenne', 'desc')
+      ->get();*/
+    $etudiants = Note::where('annee_scol', $annee_scol)
+      ->where('semestre', $semestre)
+      ->where('matiere_id', $matiere_id)
+      ->with([
+        'etudiant',
+        'etudiant.inscriptions' => function ($query) use ($annee_scol) {
+          $query->where('annee_scol', $annee_scol)
+            ->with('classe');
+        },
+      ])
+      ->select('etudiant_id', DB::raw('AVG(note_calc) as moyenne'))
+      ->groupBy('etudiant_id')
+      ->havingRaw('AVG(note_calc) < 10')
+      ->orderBy('moyenne', 'desc')
+      ->get();
+    $pdf = new MoyenneSuiviPdf($annee_scol, $semestre, $matiere_id);
+    $pdf->AddPage();
+    $pdf->SetY(23);
+    $compteur = 1;
+    $count_etud = count($etudiants);
+    foreach ($etudiants as $etudiant) {
+      $pdf->SetX(5);
+      $pdf->SetFont('helvetica', '', 8);
+      // Données
+      $pdf->Cell(10, 6, $compteur, 1, 0, 'C', false);
+      $pdf->Cell(15, 6, $etudiant->etudiant->num_enr, 1, 0, 'C', false);
+      $pdf->Cell(20, 6, $etudiant->etudiant->code_massar, 1, 0, 'C', false);
+      $pdf->Cell(60, 6, mb_strtoupper($etudiant->etudiant->nom . ' ' . $etudiant->etudiant->prenom, 'UTF-8'), 1, 0, 'L', false);
+      $pdf->Cell(40, 6, $etudiant->etudiant->niv_scol, 1, 0, 'L', false);
+      $pdf->Cell(15, 6, optional($etudiant->etudiant->inscriptions->first())->classe->abr_classe, 1, 0, 'L', false);
       $pdf->Cell(20, 6, number_format($etudiant->moyenne, 2, ',', ' '), 1, 1, 'C', false);
       $compteur++;
       $count_etud = $count_etud - 1;

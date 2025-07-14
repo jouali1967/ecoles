@@ -61,4 +61,14 @@ class ListEtudSuivi extends Component
       return view('livewire.editions.list-etud-suivi', compact('etudiants'));
     }
   }
+    public function imprimer()
+  {
+    $params = route('notes.suivietud.pdf', [
+      'annee_scol' => $this->annee_scolaire ?? '',
+      'semestre' => $this->semestre ?? '',
+      'matiere_id' => $this->matiere_id ?? '',
+    ]);
+    $this->dispatch('openEtatWindow', url: $params);
+  }
+
 }
