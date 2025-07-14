@@ -20,7 +20,6 @@
               @error('annee_scolaire') <span class="text-danger small">{{ $message }}</span> @enderror
             </div>
           </div>
-
           <div class="col-md-3">
             <div class="form-group mb-0">
               <label for="semestre" class="form-label small">Semestre</label>
@@ -30,6 +29,18 @@
                 <option value="2">Semestre 2</option>
               </select>
               @error('semestre') <span class="text-danger small">{{ $message }}</span> @enderror
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group mb-0">
+              <label for="matiere_id" class="form-label small">Matieres</label>
+              <select wire:model="matiere_id" id="matiere_id" class="form-select form-select-sm">
+                <option value="">Sélectionnez une matiere</option>
+                @foreach($matieres as $id=>$nom_matiere)
+                <option value="{{ $id }}">{{ $nom_matiere }}</option>
+                @endforeach
+              </select>
+              @error('matiere_id') <span class="text-danger small">{{ $message }}</span> @enderror
             </div>
           </div>
 

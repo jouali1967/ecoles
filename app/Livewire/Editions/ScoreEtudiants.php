@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Editions;
 
+use App\Models\Note;
 use Livewire\Component;
 use App\Models\Inscription;
 use Livewire\WithPagination;
@@ -39,8 +40,14 @@ class ScoreEtudiants extends Component
     if ($this->showResults) {
       $annee_scol = $this->annee_scolaire;
       $semestre = $this->semestre;
-
-      $etudiants = DB::table('etudiants') // Assurez-vous que cette table existe
+      $etudiants = Note::where('annee_scol', $annee_scol)
+        ->where('semestre', $semestre)
+        ->with(['etudiant', 'etudiant.lastInscription.classe'])
+        ->select('etudiant_id', DB::raw('AVG(note_calc) as moyenne'))
+        ->groupBy('etudiant_id')
+        ->orderBy('moyenne', 'desc')
+        ->paginate(5);
+      /*$etudiants = DB::table('etudiants') // Assurez-vous que cette table existe
         ->Join('inscriptions', 'etudiants.id', '=', 'inscriptions.etudiant_id')
         ->leftJoin('classes', 'inscriptions.classe_id', '=', 'classes.id')
         ->join('notes', function ($join) use ($annee_scol, $semestre) {
@@ -71,18 +78,16 @@ class ScoreEtudiants extends Component
           'classes.nom_classe',
           'classes.abr_classe'
         )
-        // ->havingRaw('SUM(notes.note_calc * notes.coefficient) / NULLIF(SUM(notes.coefficient), 0) > 11')
-        //  ->havingRaw('SUM(notes.note_calc * notes.coefficient) / NULLIF(SUM(notes.coefficient), 0) > 11 
-        //              AND SUM(notes.note_calc * notes.coefficient) / NULLIF(SUM(notes.coefficient), 0) < 12')
         ->orderBy('moyenne', 'desc')
-        ->paginate(5);
+        ->paginate(5);*/
     }
 
-    return view('livewire.editions.score-etudiants',compact('etudiants'));
+    return view('livewire.editions.score-etudiants', compact('etudiants'));
   }
 
-  public function imprimer(){
-      $params = route('editions.score.pdf', [
+  public function imprimer()
+  {
+    $params = route('editions.score.pdf', [
       'annee_scol' => $this->annee_scolaire ?? '',
       'semestre' => $this->semestre ?? '',
     ]);

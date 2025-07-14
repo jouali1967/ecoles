@@ -12,6 +12,7 @@ use App\Livewire\Archives\CreateArchive;
 use App\Livewire\Archives\ListArchive;
 use App\Livewire\Editions\EtatEtudiant;
 use App\Livewire\Editions\ListBenif;
+use App\Livewire\Editions\ListEtudSuivi;
 use App\Livewire\Editions\ListHandicap;
 use App\Livewire\Editions\ListOrphelin;
 use App\Livewire\Editions\ListTeritoriale;
@@ -68,6 +69,8 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/notes', ListNote::class)->name('notes.index');
   //Route::get('/notes{note}/edit', EditNote::class)->name('notes.edit');
   Route::get('/notes/saisie', SaisieNote::class)->name('notes.saisie');
+  Route::get('/notes/suivi', ListEtudSuivi::class)->name('notes.etud.suivi');
+  
   // Route pour le suivi des notes
   Route::get('notes/suivi-notes', SuiviNote::class)->name('notes.suivi-notes');
   // Route pour lien parental

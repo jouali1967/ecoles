@@ -203,6 +203,13 @@
                   <p>Suivi Notes Etudiant</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a wire:navigate href="{{route('notes.etud.suivi') }}"
+                  class="nav-link {{ request()->routeIs('notes.etud.suivi') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Liste Moyenne < 10</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item {{ request()->routeIs('editions.*') ? 'menu-open' : '' }}">
