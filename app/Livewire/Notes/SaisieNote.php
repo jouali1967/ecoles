@@ -40,6 +40,7 @@ class SaisieNote extends Component
   public $notes = [];
   public $semestre;
   public $annees_scolaires;
+  public $annees_scolaires_etudiant = [];
   public function rechercherEtudiant()
   {
     // Récupère les notes de l'étudiant pour le semestre et l'année scolaire sélectionnés
@@ -105,10 +106,12 @@ class SaisieNote extends Component
   {
     $this->notes = []; // Réinitialiser les notes pour le nouvel étudiant sélectionné
     $this->etudiant_id = $etudiant;
-    $this->selectedEtudiant = Etudiant::with(['notes', 'lastInscription.classe'])
+    $this->selectedEtudiant = Etudiant::with(['notes', 'lastInscription.classe', 'inscriptions'])
       ->find($this->etudiant_id->id);
     $this->searchEtudiant = $etudiant->nom . ' ' . $etudiant->prenom;
     $this->etudiants = collect();
+    // Met à jour les années scolaires de l'étudiant sélectionné
+    $this->annees_scolaires_etudiant = $this->selectedEtudiant->inscriptions->pluck('annee_scol')->unique()->sortDesc()->values()->toArray();
   }
 
 

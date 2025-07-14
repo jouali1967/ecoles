@@ -40,9 +40,15 @@
         <div style="width: 180px;">
           <select class="form-select form-select-sm" wire:model="annee_scol">
             <option value="">Année scolaire</option>
+            @if($selectedEtudiant && count($annees_scolaires_etudiant) > 0)
+            @foreach($annees_scolaires_etudiant as $annee)
+            <option value="{{ $annee }}">{{ $annee }}</option>
+            @endforeach
+            @else
             @foreach($annees_scolaires as $annee)
             <option value="{{ $annee }}">{{ $annee }}</option>
             @endforeach
+            @endif
           </select>
         </div>
         <div>
