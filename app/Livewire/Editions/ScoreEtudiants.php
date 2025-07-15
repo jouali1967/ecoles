@@ -42,7 +42,14 @@ class ScoreEtudiants extends Component
       $semestre = $this->semestre;
       $etudiants = Note::where('annee_scol', $annee_scol)
         ->where('semestre', $semestre)
-        ->with(['etudiant', 'etudiant.lastInscription.classe'])
+        //->with(['etudiant', 'etudiant.lastInscription.classe'])
+        ->with([
+          'etudiant',
+          'etudiant.inscriptions' => function ($query) use ($annee_scol) {
+            $query->where('annee_scol', $annee_scol)
+              ->with('classe');
+          },
+        ])
         ->select('etudiant_id', DB::raw('AVG(note_calc) as moyenne'))
         ->groupBy('etudiant_id')
         ->orderBy('moyenne', 'desc')

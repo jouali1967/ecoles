@@ -98,11 +98,11 @@
                 @endif
 
               </td>
-              <td>{{ $etudiant->num_enr }}</td>
-              <td>{{ $etudiant->code_massar }}</td>
-              <td>{{ $etudiant->nom }}</td>
-              <td>{{ $etudiant->prenom }}</td>
-              <td>{{ $etudiant->abr_classe }}</td>
+              <td>{{ $etudiant->etudiant->num_enr }}</td>
+              <td>{{ $etudiant->etudiant->code_massar }}</td>
+              <td>{{ $etudiant->etudiant->nom }}</td>
+              <td>{{ $etudiant->etudiant->prenom }}</td>
+              <td>{{ optional($etudiant->etudiant->inscriptions->first())->classe->abr_classe }}</td>
               <td>{{ number_format($etudiant->moyenne, 2, ',', ' ') }}</td>
               <td>
                 @if($etudiant->moyenne >= 10)

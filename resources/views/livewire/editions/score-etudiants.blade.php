@@ -88,22 +88,7 @@
               <td>{{ $etudiant->etudiant->code_massar }}</td>
               <td>{{ $etudiant->etudiant->nom }}</td>
               <td>{{ $etudiant->etudiant->prenom }}</td>
-              <td>
-                @php
-                $classe = null;
-                if($etudiant->etudiant && $etudiant->etudiant->inscriptions) {
-                $insc = $etudiant->etudiant->inscriptions->where('annee_scol', $annee_scolaire)->first();
-                if($insc && $insc->classe) {
-                $classe = $insc->classe->nom_classe;
-                }
-                }
-                @endphp
-                @if($classe)
-                {{ $classe }}
-                @else
-                <span class="text-muted">-</span>
-                @endif
-              </td>
+              <td>{{ optional($etudiant->etudiant->inscriptions->first())->classe->abr_classe }}</td>
               <td>{{ number_format($etudiant->moyenne, 2, ',', ' ') }}</td>
               <td>
                 @if($etudiant->moyenne >= 10)

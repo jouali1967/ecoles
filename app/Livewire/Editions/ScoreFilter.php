@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Editions;
 
+use App\Models\Note;
 use Livewire\Component;
 use App\Models\Inscription;
 use Livewire\WithPagination;
@@ -19,7 +20,7 @@ class ScoreFilter extends Component
   public $semestre;
   public $annees_scolaires;
   public $showResults = false;
-    public $superieur_a;
+  public $superieur_a;
   public $inferieur_a;
 
   public function mount()
@@ -43,8 +44,7 @@ class ScoreFilter extends Component
     if ($this->showResults) {
       $annee_scol = $this->annee_scolaire;
       $semestre = $this->semestre;
-
-      $etudiants = DB::table('etudiants') // Assurez-vous que cette table existe
+      /* $etudiants = DB::table('etudiants') 
         ->Join('inscriptions', 'etudiants.id', '=', 'inscriptions.etudiant_id')
         ->leftJoin('classes', 'inscriptions.classe_id', '=', 'classes.id')
         ->join('notes', function ($join) use ($annee_scol, $semestre) {
@@ -81,20 +81,43 @@ class ScoreFilter extends Component
         [$this->superieur_a, $this->inferieur_a]
     )
         ->orderBy('moyenne', 'desc')
+        ->paginate(5);*/
+      $etudiants = Note::where('annee_scol', $annee_scol)
+        ->where('semestre', $semestre)
+        ->with([
+          'etudiant',
+          'etudiant.inscriptions' => function ($query) use ($annee_scol) {
+            $query->where('annee_scol', $annee_scol)
+              ->with('classe');
+          },
+        ])
+        ->select(
+          'etudiant_id',
+          DB::raw('SUM(note_calc * coefficient) as total_notes'),
+          DB::raw('SUM(coefficient) as total_coefficients'),
+          DB::raw('SUM(note_calc * coefficient) / NULLIF(SUM(coefficient), 0) as moyenne')
+        )
+        ->groupBy('etudiant_id')
+        ->havingRaw(
+          'SUM(note_calc * coefficient) / NULLIF(SUM(coefficient), 0) > ? 
+         AND SUM(note_calc * coefficient) / NULLIF(SUM(coefficient), 0) < ?',
+          [$this->superieur_a, $this->inferieur_a]
+        )
+        ->orderBy('moyenne', 'desc')
         ->paginate(5);
     }
 
-    return view('livewire.editions.score-filter',compact('etudiants'));
+    return view('livewire.editions.score-filter', compact('etudiants'));
   }
 
-    public function imprimer(){
-      $params = route('editions.filter.pdf', [
+  public function imprimer()
+  {
+    $params = route('editions.filter.pdf', [
       'annee_scol' => $this->annee_scolaire ?? '',
       'semestre' => $this->semestre ?? '',
-      'superieur_a'=>$this->superieur_a,
-      'inferieur_a'=>$this->inferieur_a
+      'superieur_a' => $this->superieur_a,
+      'inferieur_a' => $this->inferieur_a
     ]);
     $this->dispatch('openEtatWindow', url: $params);
   }
-
 }
