@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
 use App\Pdf\FilterPdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,7 @@ class FilterScoreController extends Controller
     $semestre = $request->input('semestre');
     $superieur_a = $request->input('superieur_a');
     $inferieur_a = $request->input('inferieur_a');
-    $etudiants = DB::table('etudiants') // Assurez-vous que cette table existe
+    /*$etudiants = DB::table('etudiants') 
       ->Join('inscriptions', 'etudiants.id', '=', 'inscriptions.etudiant_id')
       ->leftJoin('classes', 'inscriptions.classe_id', '=', 'classes.id')
       ->join('notes', function ($join) use ($annee_scol, $semestre) {
@@ -44,20 +45,42 @@ class FilterScoreController extends Controller
          AND SUM(notes.note_calc * notes.coefficient) / NULLIF(SUM(notes.coefficient), 0) < ?',
         [$superieur_a, $inferieur_a]
       )
+      ->orderBy('moyenne', 'desc')*/
+    $etudiants = Note::where('annee_scol', $annee_scol)
+      ->where('semestre', $semestre)
+      ->with([
+        'etudiant',
+        'etudiant.inscriptions' => function ($query) use ($annee_scol) {
+          $query->where('annee_scol', $annee_scol)
+            ->with('classe');
+        },
+      ])
+      ->select(
+        'etudiant_id',
+        DB::raw('SUM(note_calc * coefficient) as total_notes'),
+        DB::raw('SUM(coefficient) as total_coefficients'),
+        DB::raw('SUM(note_calc * coefficient) / NULLIF(SUM(coefficient), 0) as moyenne')
+      )
+      ->groupBy('etudiant_id')
+      ->havingRaw(
+        'SUM(note_calc * coefficient) / NULLIF(SUM(coefficient), 0) > ? 
+         AND SUM(note_calc * coefficient) / NULLIF(SUM(coefficient), 0) < ?',
+        [$superieur_a, $inferieur_a]
+      )
       ->orderBy('moyenne', 'desc')
       ->get();
-    $pdf = new FilterPdf($annee_scol,$semestre,$superieur_a,$inferieur_a);
+    $pdf = new FilterPdf($annee_scol, $semestre, $superieur_a, $inferieur_a);
     $pdf->AddPage();
     $pdf->SetY(24);
-        $compteur = 1;
+    $compteur = 1;
     $count_etud = count($etudiants);
     foreach ($etudiants as $etudiant) {
       $pdf->SetX(8);
       $pdf->SetFont('aealarabiya', '', 10); // Police arabe
       // Données
       $pdf->Cell(10, 6, $compteur, 1, 0, 'C', false);
-      $pdf->Cell(80, 6, $etudiant->nom_ar . ' ' . $etudiant->prenom_ar, 1, 0, 'R', false); // Aligné à droite
-      $pdf->Cell(40, 6, $etudiant->abr_classe, 1, 0, 'L', false);
+      $pdf->Cell(80, 6, $etudiant->etudiant->nom_ar . ' ' . $etudiant->etudiant->prenom_ar, 1, 0, 'R', false); // Aligné à droite
+      $pdf->Cell(40, 6, optional($etudiant->etudiant->inscriptions->first())->classe->abr_classe, 1, 0, 'R', false);
       $pdf->Cell(40, 6, number_format($etudiant->moyenne, 2, ',', ' '), 1, 1, 'C', false);
       $compteur++;
       $count_etud = $count_etud - 1;
@@ -65,9 +88,8 @@ class FilterScoreController extends Controller
         $pdf->AddPage();
       }
     }
-    
-       // Génération du PDF
-    return $pdf->Output('etat_etudiants_' . date('Y-m-d') . '.pdf', 'I');
 
+    // Génération du PDF
+    return $pdf->Output('etat_etudiants_' . date('Y-m-d') . '.pdf', 'I');
   }
 }
