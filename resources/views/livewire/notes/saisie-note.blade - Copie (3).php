@@ -127,19 +127,19 @@
             <td>{{ $matiere->nom_matiere }} (Coef: {{ optional($matiere->pivot)->coefficient ?? 'N/D' }})</td>
             <td>
               <input type="number" wire:model.defer="notes.{{ $matiere->id }}.controle1" class="form-control"
-                step="0.01" min="0" max="20" title="La note ne doit pas dépasser 20">
+                step="0.01">
             </td>
             <td>
               <input type="number" wire:model.defer="notes.{{ $matiere->id }}.controle2" class="form-control"
-                step="0.01" min="0" max="20" title="La note ne doit pas dépasser 20">
+                step="0.01">
             </td>
             <td>
               <input type="number" wire:model.defer="notes.{{ $matiere->id }}.controle3" class="form-control"
-                step="0.01" min="0" max="20" title="La note ne doit pas dépasser 20">
+                step="0.01">
             </td>
             <td>
               <input type="number" wire:model.defer="notes.{{ $matiere->id }}.controle4" class="form-control"
-                step="0.01" min="0" max="20" title="La note ne doit pas dépasser 20">
+                step="0.01">
             </td>
           </tr>
           @endforeach

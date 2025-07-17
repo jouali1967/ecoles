@@ -26,7 +26,6 @@
               @error('annee_scolaire') <span class="text-danger small">{{ $message }}</span> @enderror
             </div>
           </div>
-
           <div class="col-md-3">
             <div class="form-group mb-0">
               <label for="semestre" class="form-label small">Semestre</label>
@@ -38,7 +37,6 @@
               @error('semestre') <span class="text-danger small">{{ $message }}</span> @enderror
             </div>
           </div>
-
           <div class="col-md-4">
             <div class="form-group mb-0">
               <label for="nom_etudiant" class="form-label small">Étudiant</label>
@@ -79,7 +77,6 @@
               @error('nom_etudiant') <span class="text-danger small">{{ $message }}</span> @enderror
             </div>
           </div>
-
           <div class="col-md-2">
             <button type="submit" class="btn btn-primary btn-sm w-100">
               <i class="fas fa-search"></i> Rechercher
