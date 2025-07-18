@@ -128,4 +128,9 @@ class Etudiant extends Model
         : null,
     );
   }
+    public function evenements(): HasMany
+  {
+    return $this->hasMany(Evenement::class);
+  }
+
 }

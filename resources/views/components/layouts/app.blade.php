@@ -300,6 +300,33 @@
             </ul>
 
           </li>
+          {{-- les evenements --}}
+          <li class="nav-item {{ request()->routeIs('evenements.*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ request()->routeIs('evenements.*') ? 'active' : '' }}">
+              <i class="nav-icon bi bi-box-seam-fill"></i>
+              <p>
+                Evenements
+                <i class="nav-arrow bi bi-chevron-right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('evenements.create') }}"
+                  class="nav-link {{ request()->routeIs('evenements.create') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Ajouter Evenement</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a wire:navigate href="{{ route('evenements.index') }}"
+                  class="nav-link {{ request()->routeIs('evenements.index') ? 'active' : '' }}">
+                  <i class="nav-icon bi bi-circle"></i>
+                  <p>Liste Evenements</p>
+                </a>
+              </li>
+            </ul>
+
+          </li>
 
           {{-- <li class="nav-item {{ request()->routeIs('parents.*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link {{ request()->routeIs('parents.*') ? 'active' : '' }}">
