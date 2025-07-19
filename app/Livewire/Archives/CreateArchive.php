@@ -54,7 +54,7 @@ class CreateArchive extends Component
     $this->etudiant_id = $id;
     $this->selectedEtudiant = Etudiant::with(['lastInscription.classe'])->find($id);
     // Pré-sélectionner la classe de l'étudiant si elle existe
-    $this->classe_id = $this->selectedEtudiant->lastInscription->classe->id ?? null;
+    $this->classe_id = $this->selectedEtudiant?->lastInscription?->classe?->id ?? null;
     $this->searchEtudiant = '';
     $this->etudiants = collect();
   }
