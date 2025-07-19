@@ -43,4 +43,12 @@ class ListeEvenement extends Component
     ->paginate(5);
     return view('livewire.evenements.liste-evenement', compact('evenements'));
   }
+  public function imprimer_excel(){
+    $params = route('evenements.excel',[
+      'search' => $this->search,
+    ]);
+    $this->dispatch('ouvrir-excel', $params);
+
+
+  }
 }

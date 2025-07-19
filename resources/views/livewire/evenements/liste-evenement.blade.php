@@ -3,10 +3,20 @@
     <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Liste des Événements</h5>
   </div>
   <div class="card-body p-3">
-    <div class="mb-3">
+    <div class="mb-3 d-flex justify-content-between align-items-center">
       <div class="input-group" style="max-width: 300px;">
         <span class="input-group-text"><i class="fas fa-search"></i></span>
         <input type="text" class="form-control" wire:model.live="search" placeholder="Rechercher...">
+      </div>
+      <div>
+        {{-- <button type="button" class="btn btn-outline-primary me-2" wire:click="imprimer_pdf"
+         @ouvrir-excel.window="window.open($event.detail, '_blank')">
+          <i class="fas fa-file-pdf me-1"></i> Imprimer (PDF)
+        </button> --}}
+        <button type="button" class="btn btn-outline-success" wire:click="imprimer_excel"
+          @ouvrir-excel.window="window.open($event.detail, '_blank')">
+          <i class="fas fa-file-excel me-1"></i> Imprimer (Excel)
+        </button>
       </div>
     </div>
     <table class="table table-hover align-middle mb-0">

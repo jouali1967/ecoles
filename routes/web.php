@@ -1,45 +1,46 @@
 <?php
 
-use App\Http\Controllers\ArchiveFilterController;
-use App\Http\Controllers\EtudiantPdf;
-use App\Http\Controllers\FilterScoreController;
-use App\Http\Controllers\HandicapPdfController;
-use App\Http\Controllers\ListBenifController;
-use App\Http\Controllers\ListTeritController;
-use App\Http\Controllers\OrphelinPdfController;
-use App\Http\Controllers\ScoreEtudiantPdf;
-use App\Livewire\Archives\CreateArchive;
-use App\Livewire\Archives\ListArchive;
-use App\Livewire\Editions\EtatEtudiant;
-use App\Livewire\Editions\ListBenif;
-use App\Livewire\Editions\ListEtudSuivi;
-use App\Livewire\Editions\ListHandicap;
-use App\Livewire\Editions\ListOrphelin;
-use App\Livewire\Editions\ListTeritoriale;
-use App\Livewire\Editions\ScoreEtudiants;
-use App\Livewire\Editions\ScoreFilter;
-use App\Livewire\Etudiants\CreateInscription;
-use App\Livewire\Evenements\CreateEvenement;
-use App\Livewire\Evenements\EditEvenement;
-use App\Livewire\Evenements\ListeEvenement;
-use App\Livewire\Notes\SaisieNote;
-use App\Livewire\Parents\CreateParent;
-use App\Livewire\Parents\EditParent;
-use App\Livewire\Parents\ListParent;
-use App\Livewire\Notes\SuiviNote;
 use App\Livewire\Notes\ListNote;
 use App\Livewire\Admin\Dashboard;
+use App\Livewire\Notes\SuiviNote;
+use App\Livewire\Notes\SaisieNote;
 use App\Livewire\Classes\ListClasse;
 use App\Livewire\Classes\MajClasses;
+use App\Livewire\Editions\ListBenif;
+use App\Livewire\Parents\EditParent;
+use App\Livewire\Parents\ListParent;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\EtudiantPdf;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Archives\ListArchive;
 use App\Livewire\Classes\CreateClasse;
+use App\Livewire\Editions\ScoreFilter;
 use App\Livewire\Matieres\ListMatiere;
 use App\Livewire\Matieres\MajMatieres;
+use App\Livewire\Parents\CreateParent;
+use App\Livewire\Editions\EtatEtudiant;
+use App\Livewire\Editions\ListHandicap;
+use App\Livewire\Editions\ListOrphelin;
+use App\Livewire\Archives\CreateArchive;
+use App\Livewire\Editions\ListEtudSuivi;
 use App\Livewire\Etudiants\EditEtudiant;
 use App\Livewire\Etudiants\ListEtudiant;
 use App\Livewire\Matieres\CreateMatiere;
+use App\Livewire\Editions\ScoreEtudiants;
+use App\Http\Controllers\ScoreEtudiantPdf;
+use App\Livewire\Editions\ListTeritoriale;
 use App\Livewire\Etudiants\CreateEtudiant;
+use App\Livewire\Evenements\EditEvenement;
+use App\Livewire\Evenements\ListeEvenement;
+use App\Livewire\Evenements\CreateEvenement;
+use App\Http\Controllers\ListBenifController;
+use App\Http\Controllers\ListTeritController;
+use App\Livewire\Etudiants\CreateInscription;
+use App\Http\Controllers\EvenementsController;
+use App\Http\Controllers\FilterScoreController;
+use App\Http\Controllers\HandicapPdfController;
+use App\Http\Controllers\OrphelinPdfController;
+use App\Http\Controllers\ArchiveFilterController;
 use App\Livewire\ClassesMatieres\ListClasseMatiere;
 use App\Livewire\ClassesMatieres\MajClassesMatieres;
 use App\Livewire\ClassesMatieres\CreateClasseMatiere;
@@ -48,7 +49,7 @@ Route::get('/', function () {
   return redirect('/login');
 });
 Auth::routes();
-Route::middleware(['auth'])->group(function () {
+  Route::middleware(['auth'])->group(function () {
   Route::get('/', Dashboard::class)->name('admin');
   // Routes pour les classes
   Route::get('/classes', MajClasses::class)->name('classes.maj');
@@ -113,5 +114,6 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/evenements/create',CreateEvenement::class)->name('evenements.create');
   Route::get('/evenements/liste',ListeEvenement::class)->name('evenements.index');
   Route::get('/evenements/{id}/edit', EditEvenement::class)->name('evenements.edit');
+  Route::get('/evenements/excel', [EvenementsController::class, 'generate_excel'])->name('evenements.excel');
 
 });

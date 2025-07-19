@@ -15,7 +15,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        Schema::defaultStringLength(191);
     }
 
     /**
@@ -23,8 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-      Livewire::setUpdateRoute(function ($handle) {
-            return Route::post('/etudiants/public/livewire/update', $handle);
-        });
+         Schema::defaultStringLength(191);
+    Livewire::setUpdateRoute(function ($handle) {
+      return Route::post('/etudiants/public/livewire/update', $handle);
+    });
+
     }
 }
