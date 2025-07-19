@@ -36,10 +36,10 @@ class CreateArchive extends Component
   {
     if (strlen($this->searchEtudiant) >= 2) {
       $this->etudiants = Etudiant::with(['inscriptions.classe'])
-        ->whereNotIn('id', function ($query) {
-          $query->select('etudiant_id')
-            ->from('parentals');
-        })
+        // ->whereNotIn('id', function ($query) {
+        //   $query->select('etudiant_id')
+        //     ->from('parentals');
+        // })
         ->where(function ($query) {
           $query->where('nom', 'like', '%' . $this->searchEtudiant . '%')
             ->orWhere('prenom', 'like', '%' . $this->searchEtudiant . '%');
