@@ -49,7 +49,7 @@ Route::get('/', function () {
   return redirect('/login');
 });
 Auth::routes();
-  Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
   Route::get('/', Dashboard::class)->name('admin');
   // Routes pour les classes
   Route::get('/classes', MajClasses::class)->name('classes.maj');
