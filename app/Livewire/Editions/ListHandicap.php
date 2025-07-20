@@ -50,4 +50,8 @@ class ListHandicap extends Component
     $params = route('editions.handicap.pdf');
     $this->dispatch('openEtatWindow', url: $params);
   }
+    public function imprimer_excel(){
+      $params = route('editions.handicap.excel');
+      $this->dispatch('ouvrir-excel', $params);
+  }
 }

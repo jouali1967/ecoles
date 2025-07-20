@@ -45,10 +45,16 @@ class ListOrphelin extends Component
       return view('livewire.editions.list-orphelin',compact('etudiants'));
     }
 
-      public function imprimer()
+  public function imprimer()
   {
     $params = route('editions.orphelin.pdf');
     $this->dispatch('openEtatWindow', url: $params);
   }
+      
+  public function imprimer_excel(){
+      $params = route('editions.orphelin.excel');
+      $this->dispatch('ouvrir-excel', $params);
+  }
+
 
 }

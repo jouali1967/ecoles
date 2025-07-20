@@ -96,15 +96,18 @@ Route::middleware(['auth'])->group(function () {
 
   Route::get('/editions/listbenif', ListBenif::class)->name('editions.listbenif.etudiants');
   Route::get('/editions/listbenif/pdf', [ListBenifController::class, 'generate'])->name('editions.listbenif.pdf');
+  Route::get('/editions/listbenif/excel', [ListBenifController::class, 'generate_excel'])->name('editions.listbenif.excel');
 
   Route::get('/editions/listterit', ListTeritoriale::class)->name('editions.listterit.etudiants');
   Route::get('/editions/listterir/pdf', [ListTeritController::class, 'generate'])->name('editions.listterit.pdf');
 
   Route::get('/editions/orphelin', ListOrphelin::class)->name('editions.orphelin.etudiants');
   Route::get('/editions/orphelin/pdf', [OrphelinPdfController::class, 'generate'])->name('editions.orphelin.pdf');
+  Route::get('/editions/orphelin/excel', [OrphelinPdfController::class, 'generate_excel'])->name('editions.orphelin.excel');
   
   Route::get('/editions/handicap', ListHandicap::class)->name('editions.listhandicap.etudiants');
   Route::get('/editions/handicap/pdf', [HandicapPdfController::class, 'generate'])->name('editions.handicap.pdf');
+  Route::get('/editions/handicap/excel', [HandicapPdfController::class, 'generate_excel'])->name('editions.handicap.excel');
 
   Route::get('/archives', ListArchive::class)->name('archives.index.etudiants');
   Route::get('/archives/create', CreateArchive::class)->name('archives.create.etudiants');

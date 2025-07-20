@@ -37,9 +37,15 @@
   <div class="card mt-3">
     <div class="card-header py-2 d-flex justify-content-between align-items-center">
       <h6 class="card-title mb-0"><i class="fas fa-users me-1"></i> Résultats</h6>
-      <button wire:click="imprimer" class="btn btn-outline-secondary btn-sm ms-auto" style="float:left">
-        <i class="fas fa-print"></i> Imprimer
-      </button>
+      <div class="d-flex gap-2 ms-auto">
+        <button wire:click="imprimer" class="btn btn-outline-secondary btn-sm">
+          <i class="fas fa-print"></i> Imprimer(Pdf)
+        </button>
+        <button wire:click="imprimer_excel" class="btn btn-outline-success btn-sm"
+          @ouvrir-excel.window="window.open($event.detail, '_blank')">
+          <i class="fas fa-file-excel"></i> Imprimer(Excel)
+        </button>
+      </div>
     </div>
     <div class="card-body p-2">
       <div class="table-responsive">

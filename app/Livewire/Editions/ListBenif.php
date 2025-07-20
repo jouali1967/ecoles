@@ -76,5 +76,11 @@ class ListBenif extends Component
     ]);
     $this->dispatch('openEtatWindow', url: $params);
   }
+  public function imprimer_excel(){
+    $params = route('editions.listbenif.excel', [
+      'annee_scol' => $this->annee_scolaire ?? '',
+    ]);
+    $this->dispatch('ouvrir-excel', $params);
 
+  }
 }

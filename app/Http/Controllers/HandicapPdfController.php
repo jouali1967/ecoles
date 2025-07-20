@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Etudiant;
 use App\Pdf\HandicapPdf;
 use Illuminate\Http\Request;
+use App\Exports\HandicapExport;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HandicapPdfController extends Controller
 {
@@ -52,7 +54,7 @@ class HandicapPdfController extends Controller
       $pdf->SetFont('aealarabiya', '', 10); // Police arabe
       // Données
       $pdf->Cell(80, 6, $etudiant->nom_ar . ' ' . $etudiant->prenom_ar, 1, 0, 'R', false); // Aligné à droite
-      $pdf->Cell(40, 6, $etudiant->abr_classe, 1, 0, 'R', false);
+      $pdf->Cell(40, 6, $etudiant->inscriptions->first()->classe?->abr_classe, 1, 0, 'R', false);
       $pdf->Cell(40, 6, $etudiant->type_handicap, 1, 1, 'R', false);
       $compteur++;
       $count_etud = $count_etud - 1;
@@ -63,5 +65,13 @@ class HandicapPdfController extends Controller
 
     // Génération du PDF
     return $pdf->Output('etat_etudiants_' . date('Y-m-d') . '.pdf', 'I');
+  }
+
+  public function generate_excel(Request $request){
+    $etudiants = Etudiant::with('lastInscription.classe')
+      ->where('etudiants.handicap', 'oui')
+      ->get();
+      return Excel::download(new HandicapExport($etudiants), 'handicaps.xlsx');
+
   }
 }

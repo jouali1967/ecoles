@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BenifExport;
 use App\Pdf\BenifPdf;
 use App\Models\Etudiant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ListBenifController extends Controller
 {
@@ -60,6 +62,18 @@ class ListBenifController extends Controller
        // Génération du PDF
     return $pdf->Output('etat_etudiants_' . date('Y-m-d') . '.pdf', 'I');
 
+
+   }
+
+   public function generate_excel(Request $request){
+    $annee_scol = $request->input('annee_scol');
+    $etudiants = Etudiant::with('inscriptions.classe')
+      ->where('etudiants.ben_part', 'oui') // filtre local sur l'étudiant
+      ->whereHas('inscriptions', function ($query) use($annee_scol) {
+          $query->where('annee_scol', $annee_scol);
+    })
+    ->get();
+    return Excel::download(new BenifExport($etudiants,$annee_scol), 'benificiaire.xlsx');
 
    }
 }

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OrphelinExport;
 use App\Models\Etudiant;
 use App\Pdf\OrphelinPdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrphelinPdfController extends Controller
 {
@@ -64,5 +66,13 @@ class OrphelinPdfController extends Controller
 
     // Génération du PDF
     return $pdf->Output('etat_etudiants_' . date('Y-m-d') . '.pdf', 'I');
+  }
+
+  public function generate_excel(Request $request){
+    $etudiants = Etudiant::with('lastInscription.classe')
+      ->where('etudiants.orphelin', 'oui')
+      ->get();
+    return Excel::download(new OrphelinExport($etudiants), 'orphelins.xlsx');
+
   }
 }
