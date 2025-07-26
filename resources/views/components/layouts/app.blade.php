@@ -20,6 +20,8 @@
     integrity="sha256-9kPW/n5nn53j4WMRYAxe9c1rCY96Oogo/MKSVdKzPmI=" crossorigin="anonymous" /> --}}
   <!--end::Third Party Plugin(Bootstrap Icons)-->
   <!--begin::Required Plugin(AdminLTE)-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/styles/overlayscrollbars.min.css"
+    integrity="sha256-tZHrRjVqNSRyWg2wbppGnT833E/Ys0DHWGwT04GiqQg=" crossorigin="anonymous" />
   <link rel="stylesheet" href="{{ asset('assets/bootstrap-icons/bootstrap-icons.min.css') }}" />
   {{-- <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script> --}}
   <link rel="stylesheet" href="{{ asset('dist/datepicker/flatpickr.min.css') }}">
@@ -388,6 +390,8 @@
   <!--begin::Script-->
   <!--begin::Third Party Plugin(OverlayScrollbars)-->
   <script src="{{ asset('dist/js/jquery.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"
+    integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ=" crossorigin="anonymous"></script>
   <script src="{{ asset('dist/js/bootstrap.bundle.min.js') }}"> </script>
   <script src="{{ asset('assets/fontawesome/fontaesome6-3-0.js') }}" crossorigin="anonymous"></script>
   <script src="{{ asset('dist/datepicker/flatpickr.min.js') }}"></script>
@@ -395,6 +399,26 @@
   <script src="{{ asset('dist/js/monthSelectIndex.js') }}"></script>
   <script src="{{ asset('dist/js/select2.min.js') }}"></script>
   <script src="{{ asset('dist/js/adminlte.js') }}"></script>
+  <script>
+    const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
+    const Default = {
+      scrollbarTheme: 'os-theme-light',
+      scrollbarAutoHide: 'leave',
+      scrollbarClickScroll: true,
+    };
+    document.addEventListener('DOMContentLoaded', function () {
+      const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+      if (sidebarWrapper && typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== 'undefined') {
+        OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+          scrollbars: {
+            theme: Default.scrollbarTheme,
+            autoHide: Default.scrollbarAutoHide,
+            clickScroll: Default.scrollbarClickScroll,
+          },
+        });
+      }
+    });
+  </script>
 
   @livewireScripts {{-- Laissez Livewire Scripts en dernier --}}
 </body>
